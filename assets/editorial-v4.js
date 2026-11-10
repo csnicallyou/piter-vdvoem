@@ -32,9 +32,6 @@
       button.setAttribute('aria-current',on?'page':'false');
     });
   }
-  document.addEventListener('click',event=>{
-    if(event.target.closest('[data-nav]'))requestAnimationFrame(syncNav);
-  });
   window.addEventListener('hashchange',syncNav);
   syncNav();
 })();
