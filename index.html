@@ -13,7 +13,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="./assets/app-v3.css?v=4">
-<link rel="stylesheet" href="./assets/editorial-v4.css?v=4">
+<link rel="stylesheet" href="./assets/editorial-v4.css?v=5">
 </head>
 <body>
 <div class="ui">
@@ -56,17 +56,16 @@
             </div>
           </div>
           <div class="editorial-sculpture" aria-hidden="true">
-            <div class="ed-aura"></div>
-            <div class="ed-photo-arc"></div>
-            <div class="ed-photo-city"><svg viewBox="0 0 700 290" preserveAspectRatio="xMidYMax slice" role="presentation"><defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d6b9c4"/><stop offset=".62" stop-color="#ecdad8"/><stop offset="1" stop-color="#c4bbc0"/></linearGradient></defs><rect width="700" height="290" fill="url(#sky)"/><path d="M0 243v-35l27-19 24 11 26-45 18 22 31-27 40 48 22-10 21 17 36-58 22 50 16-11 20 17 45-62 24 60 39-36 26 32 41-37 18 27 30-14 27 23 37-13 23 21 22-12 44 28v55Z" fill="#87858e" opacity=".52"/><path d="M0 245h700v45H0Z" fill="#696b70" opacity=".6"/><g fill="#4e555c"><rect x="60" y="151" width="125" height="96"/><rect x="198" y="174" width="86" height="73"/><rect x="422" y="164" width="116" height="83"/><rect x="549" y="183" width="125" height="64"/><rect x="330" y="143" width="57" height="104"/><path d="M310 144q48-115 96 0Z"/><rect x="353" y="62" width="8" height="41"/><path d="M357 45l-4 25h8Z"/><path d="M41 151h163l-20-17H59Z"/><path d="M401 164h156l-20-18H419Z"/></g><g stroke="#d4c5c7" stroke-width="3" opacity=".45"><path d="M0 261h700M0 270h700"/></g></svg></div>
-            <svg class="ed-chrome-heart" viewBox="0 0 520 480" aria-hidden="true"><defs><linearGradient id="chrm" x1="0" y1="0" x2="1" y2=".95"><stop stop-color="#34383e"/><stop offset=".10" stop-color="#fff"/><stop offset=".22" stop-color="#818690"/><stop offset=".37" stop-color="#f7f6f9"/><stop offset=".55" stop-color="#5e656e"/><stop offset=".69" stop-color="#fcfbfa"/><stop offset=".83" stop-color="#9699a1"/><stop offset="1" stop-color="#f6eff2"/></linearGradient><filter id="shadowChrome"><feDropShadow dx="0" dy="18" stdDeviation="19" flood-color="#4a424d" flood-opacity=".24"/></filter></defs><path d="M265 410C190 346 70 273 70 167 70 72 181 54 265 150 358 45 464 82 464 177 464 282 353 348 265 410Z" fill="url(#chrm)" filter="url(#shadowChrome)"/><path d="M265 357C184 289 111 235 111 164 111 119 183 100 265 204 335 112 417 112 417 173 417 241 331 307 265 357Z" fill="#d6d0d5" opacity=".84"/><path d="M116 140C142 75 211 106 265 173" fill="none" stroke="#fff" stroke-width="12" opacity=".75"/><path d="M301 388C371 331 443 276 448 201" fill="none" stroke="#fff" stroke-width="9" opacity=".64"/></svg>
-            <span class="ed-orbit"></span><span class="ed-spark">✦</span>
+            <img class="ed-scene-image" src="./assets/art/site-hero-main.webp" alt="" decoding="async" fetchpriority="high">
+            <img class="ed-heart-image" src="./assets/art/site-heart.webp" alt="" loading="eager">
+            <img class="ed-star-image" src="./assets/art/site-star.webp" alt="" loading="eager">
+            <img class="ed-lily-image" src="./assets/art/site-lily.webp" alt="" loading="lazy">
             <span class="ed-artefact">© 2026 / 59.9343° N</span>
           </div>
           <div class="editorial-trip glass">
             <div class="ed-trip-top"><span>МОЙ ПЛАН / 01</span><button class="round-btn" data-nav="routes" aria-label="Открыть план">↗</button></div>
             <h3>21 — 28<br><em>ноября</em></h3>
-            <div class="trip-miniatures"><div class="trip-photo first"></div><div class="trip-photo second"></div><div class="trip-photo third"></div></div>
+            <div class="trip-miniatures"><div class="trip-photo first" style="background-image:url(./assets/art/site-hero-main.webp)"></div><div class="trip-photo second" style="background-image:url(./assets/art/site-architecture.webp)"></div><div class="trip-photo third" style="background-image:url(./assets/art/site-water.webp)"></div></div>
             <div class="trip-caption"><span id="homeRoutes">8 дней</span><span>✦</span><span id="homeSaved">Избранное</span></div>
           </div>
         </div>
@@ -79,9 +78,9 @@
           <div class="ed-collections">
             <div class="ed-section-head"><h2>Подборки <em>города</em></h2><button data-nav="catalog" class="ed-text-link">Все места ↗</button></div>
             <div class="ed-collection-grid">
-              <button class="ed-collection-card midnight" data-nav="catalog"><span class="ed-card-number">01 / СКРЫТОЕ</span><strong>Город<br>после полуночи</strong><span>Бары · Прогулки · Атмосфера ↗</span></button>
-              <button class="ed-collection-card architecture" data-nav="catalog"><span class="ed-card-number">02 / ФОРМА</span><strong>Архитектура<br>и индустрия</strong><span>Необычные здания ↗</span></button>
-              <button class="ed-collection-card river" data-nav="catalog"><span class="ed-card-number">03 / МЕДЛЕННО</span><strong>По воде<br>и набережным</strong><span>Прогулки · Виды ↗</span></button>
+              <button class="ed-collection-card midnight" style="background-image:url(./assets/art/site-water.webp)" data-nav="catalog"><span class="ed-card-number">01 / СКРЫТОЕ</span><strong>Город<br>после полуночи</strong><span>Бары · Прогулки · Атмосфера ↗</span></button>
+              <button class="ed-collection-card architecture" style="background-image:url(./assets/art/site-architecture.webp)" data-nav="catalog"><span class="ed-card-number">02 / ФОРМА</span><strong>Архитектура<br>и индустрия</strong><span>Необычные здания ↗</span></button>
+              <button class="ed-collection-card river" style="background-image:url(./assets/art/site-water.webp)" data-nav="catalog"><span class="ed-card-number">03 / МЕДЛЕННО</span><strong>По воде<br>и набережным</strong><span>Прогулки · Виды ↗</span></button>
             </div>
           </div>
           <button class="ed-map-preview glass" data-nav="map" aria-label="Открыть карту всех мест">
