@@ -118,6 +118,52 @@ button{cursor:pointer}
 @media (max-width:1180px){.hero{grid-template-columns:1fr}.layout,.route-layout{grid-template-columns:1fr}.sidebar{order:2}.route-head{grid-template-columns:1fr}}
 @media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.card-grid,.stop-grid{grid-template-columns:1fr}.hero-main{grid-template-columns:1fr}.stamp{min-height:auto}.panel-top{grid-template-columns:1fr}.route-head h2{font-size:36px}}
 @media (max-width:620px){body{background-size:24px 24px,24px 24px,auto}.shell{padding:10px 10px 28px}.hero{padding:16px;border-radius:26px}.hero h1{font-size:40px;max-width:none}.stats{gap:10px;margin:12px 0 16px}.stat{padding:14px;border-radius:18px}.stat b{font-size:28px}.tabs{position:sticky;top:8px;z-index:20;padding:4px;background:rgba(245,240,232,.85);backdrop-filter:blur(14px)}.tab{padding:10px 14px}.block,.card,.mapwrap,.stop{border-radius:20px}.route-list{display:flex;overflow-x:auto;max-height:none}.daycard{flex:0 0 220px}#map{height:360px}.route-layout{gap:12px}.chips{max-height:none;overflow:visible}}
+
+/* Explorer / product UI */
+.discovery{display:grid;gap:16px}
+.discovery-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;background:var(--paper);border:2px solid var(--ink);border-radius:28px;padding:22px 26px}
+.discovery-head h2{margin:12px 0 8px;font-size:clamp(42px,6vw,76px);line-height:.9;letter-spacing:-.075em;text-transform:uppercase}
+.discovery-head h2 em{font-style:normal;color:var(--accent)}
+.discovery-head p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+.discovery-number{text-align:right;background:var(--ink);color:#fff;border-radius:20px;padding:16px 20px;min-width:144px}
+.discovery-number strong{font-size:42px;letter-spacing:-.07em;display:block}
+.discovery-number span{font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+.discovery-layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;align-items:start}
+.discovery-sidebar{display:grid;gap:14px;align-content:start;min-width:0}
+.discovery-sidebar .control{margin-bottom:9px}
+.discovery-sidebar .block{padding:16px}
+.map-tools{display:flex;flex-wrap:wrap;gap:7px}
+.map-list-heading{display:flex;justify-content:space-between;align-items:center}
+.map-list-heading small{color:var(--muted);font-size:12px}
+.map-place-list{display:grid;gap:8px;max-height:390px;overflow-y:auto}
+.map-place{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px;display:grid;grid-template-columns:38px 1fr;gap:9px;text-align:left;width:100%;align-items:start}
+.map-place.active{border-color:var(--accent);background:#fff0eb}
+.map-place-icon{font-size:19px;border-radius:11px;width:36px;height:36px;display:grid;place-items:center;background:var(--paper-2)}
+.map-place b{font-size:13px;line-height:1.35;display:block}
+.map-place small{font-size:11px;color:var(--muted);margin-top:4px;display:block}
+.map-column{min-width:0;position:sticky;top:12px;display:grid;gap:12px}
+.allmap-frame{padding:12px;background:var(--paper);border:2px solid var(--ink);border-radius:28px;position:relative;box-shadow:var(--shadow)}
+#allPlacesMap{height:min(72vh,760px);min-height:460px;border-radius:19px;background:#ede8e0;overflow:hidden}
+.map-corner-note{position:absolute;bottom:23px;left:23px;z-index:500;background:var(--paper);border:1px solid var(--ink);font-size:11px;border-radius:999px;padding:8px 12px;pointer-events:none}
+.place-pin{width:42px;height:42px;display:grid;place-items:center;border-radius:50% 50% 50% 6px;transform:rotate(-45deg);background:var(--ink);border:3px solid #fff;box-shadow:0 3px 12px #0004}
+.place-pin>span{transform:rotate(45deg);font-size:19px}
+.place-pin.marked{background:var(--accent)}
+.place-pin.visited{background:var(--good)}
+.leaflet-div-icon.explorer-icon{background:none;border:0}
+.map-popup{min-width:190px;max-width:250px}
+.map-popup strong{font-size:15px;line-height:1.3;display:block}
+.map-popup small{color:#666;display:block;margin:6px 0 10px}
+.map-popup a{display:inline-block;background:var(--ink);color:#fff;padding:8px 11px;border-radius:12px;font-weight:700;font-size:12px}
+.map-popup button{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:7px 9px;margin:3px 3px 0 0;font-size:12px}
+.unmapped summary{cursor:pointer;font-weight:800;font-size:14px}
+.unmapped summary b{background:var(--accent-soft);padding:3px 7px;border-radius:9px}
+.unmapped p{font-size:12px;line-height:1.5;color:var(--muted)}
+.unmapped-list{max-height:240px;overflow:auto;display:grid;gap:6px;margin-top:8px}
+.unmapped-item{font-size:12px;padding:8px;border:1px solid var(--line);border-radius:10px;display:flex;gap:8px;align-items:center;justify-content:space-between}
+.unmapped-item a{font-weight:800;color:var(--accent);white-space:nowrap}
+@media(max-width:1000px){.discovery-layout{grid-template-columns:1fr}.map-column{position:static;order:-1}.discovery-sidebar{grid-template-columns:1fr 1fr}.discovery-sidebar>.unmapped{grid-column:1/-1}}
+@media(max-width:620px){.discovery-head{padding:17px;border-radius:20px;align-items:flex-start}.discovery-number{min-width:100px;padding:10px}.discovery-number strong{font-size:28px}.discovery-number span{font-size:9px}.discovery-head h2{font-size:40px}.discovery-sidebar{grid-template-columns:1fr}.discovery-sidebar>.unmapped{grid-column:auto}#allPlacesMap{height:52vh;min-height:330px}.map-corner-note{bottom:20px;left:20px}.tabs{overflow-x:auto;flex-wrap:nowrap}.tab{white-space:nowrap;font-size:12px;flex-shrink:0}}
+
 </style>
 </head>
 <body>
@@ -155,7 +201,8 @@ button{cursor:pointer}
 
   <nav class="tabs">
     <button class="tab active" data-tab="catalog">Все места</button>
-    <button class="tab" data-tab="routes">Карта и маршруты</button>
+    <button class="tab" data-tab="allmap">Карта всех мест</button>
+    <button class="tab" data-tab="routes">Маршруты по дням</button>
   </nav>
 
   <section id="catalog" class="pane active">
@@ -213,6 +260,35 @@ button{cursor:pointer}
         </section>
         <div id="cards" class="card-grid"></div>
         <div id="pager" class="pager"></div>
+      </div>
+    </div>
+  </section>
+
+<section id="allmap" class="pane">
+    <div class="discovery">
+      <div class="discovery-head">
+        <div><div class="kicker"><span>Исследуй город</span><span>Все категории</span></div><h2>Карта <em>мест</em></h2><p>Выбирай категорию, находи интересное рядом и добавляй места в свой список.</p></div>
+        <div class="discovery-number"><strong id="allMapCount">30</strong><span>точек с координатами</span></div>
+      </div>
+      <div class="discovery-layout">
+        <aside class="discovery-sidebar">
+          <div class="block">
+            <h3>Поиск по карте</h3>
+            <input class="control" id="mapSearch" type="search" placeholder="Название места…">
+            <select class="control" id="mapCategory"><option value="">Все категории</option></select>
+            <select class="control" id="mapStatus"><option value="">Все отметки</option><option value="wish">Хочу</option><option value="must">Обязательно</option><option value="done">Посетили</option><option value="other">Без отметки</option></select>
+            <div class="map-tools"><button class="btn dark" id="mapReset">Все точки</button><button class="btn" id="mapOnlyChosen">★ Избранное</button></div>
+          </div>
+          <div class="block">
+            <div class="map-list-heading"><h3>На карте</h3><small id="mapResults">—</small></div>
+            <div id="mapPlaceList" class="map-place-list"></div>
+          </div>
+          <details class="block unmapped"><summary>Места без координат <b id="unmappedCount"></b></summary><p>Для этих объектов адрес пока не подтверждён. Их нельзя честно поставить на карту. Можно открыть поиск расположения или найти место в каталоге.</p><input class="control" type="search" id="unmappedSearch" placeholder="Найти в этом списке"><div id="unmappedList" class="unmapped-list"></div></details>
+        </aside>
+        <div class="map-column">
+          <div class="allmap-frame"><div id="allPlacesMap"></div><div class="map-corner-note">📍 Метки по категориям · координаты проверяются</div></div>
+          <div class="note">На карту нанесены только объекты с координатами. Сейчас это 30 из 305: остальные ещё предстоит геокодировать и проверить. Метка на карте не гарантирует свободного входа в здание.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -281,6 +357,72 @@ const knownPriceCount = places.filter(p => p.price_two !== null && p.price_two !
 const mappedCount = places.filter(p => p.lat !== null && p.lon !== null).length;
 $('#knownPricesStat').textContent = knownPriceCount;
 $('#mappedStat').textContent = mappedCount;
+
+
+/* All places map: separate explorer map, safely limited to grounded coordinates. */
+let explorerMap=null,explorerLayer=null,explorerMarkers=new Map(),mapSelectedId=null,mapFavoritesOnly=false;
+const geoPlaces=places.filter(p=>Number.isFinite(Number(p.lat))&&Number.isFinite(Number(p.lon))&&p.lat!==null&&p.lon!==null);
+const noGeoPlaces=places.filter(p=>p.lat===null||p.lon===null||p.lat===undefined||p.lon===undefined);
+function initExplorer(){
+  if(explorerMap||!window.L)return;
+  explorerMap=L.map('allPlacesMap',{scrollWheelZoom:false,preferCanvas:true}).setView([59.94,30.31],10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(explorerMap);
+  explorerLayer=L.layerGroup().addTo(explorerMap);
+  $('#mapCategory').innerHTML='<option value="">Все категории</option>'+categories.map(c=>'<option value="'+safe(c)+'">'+safe(iconFor(c)+' '+c)+'</option>').join('');
+  $('#unmappedCount').textContent=noGeoPlaces.length;
+  $('#allMapCount').textContent=geoPlaces.length;
+  ['mapSearch','mapCategory','mapStatus'].forEach(id=>$('#'+id).addEventListener(id==='mapSearch'?'input':'change',renderExplorer));
+  $('#unmappedSearch').addEventListener('input',renderUnmapped);
+  $('#mapReset').onclick=()=>{$('#mapCategory').value='';$('#mapStatus').value='';$('#mapSearch').value='';mapFavoritesOnly=false;renderExplorer(true)};
+  $('#mapOnlyChosen').onclick=()=>{mapFavoritesOnly=!mapFavoritesOnly;$('#mapOnlyChosen').classList.toggle('primary',mapFavoritesOnly);renderExplorer(true)};
+  renderUnmapped();
+  renderExplorer(true);
+  setTimeout(()=>explorerMap.invalidateSize(),100);
+}
+function explorerFiltered(){
+ const q=$('#mapSearch').value.trim().toLowerCase(),c=$('#mapCategory').value,status=$('#mapStatus').value;
+ return geoPlaces.filter(p=>(!q||((p.name||'')+' '+(p.area||'')).toLowerCase().includes(q))&&(!c||p.category===c)&&(!status||(state[p.id]||'other')===status)&&(!mapFavoritesOnly||['wish','must'].includes(state[p.id])));
+}
+function pinHtml(p){
+ const st=state[p.id]||'';
+ return '<div class="place-pin '+(st==='done'?'visited':(st==='wish'||st==='must')?'marked':'')+'"><span>'+safe(iconFor(p.category))+'</span></div>';
+}
+function renderExplorer(fit=false){
+ if(!explorerMap)return;
+ const list=explorerFiltered();
+ explorerLayer.clearLayers(); explorerMarkers.clear();
+ $('#mapResults').textContent=list.length+' из '+geoPlaces.length;
+ $('#allMapCount').textContent=list.length;
+ $('#mapPlaceList').innerHTML=list.map(p=>'<button class="map-place '+(mapSelectedId===p.id?'active':'')+'" data-map-id="'+p.id+'"><span class="map-place-icon">'+safe(iconFor(p.category))+'</span><span><b>'+safe(p.name)+'</b><small>'+safe(p.category)+' · '+(p.price_two===null?'цена уточняется':money(p.price_two))+'</small></span></button>').join('')||'<p class="area">В этой категории пока нет точек с координатами. Они появятся после проверки адресов.</p>';
+ const bounds=[];
+ list.forEach(p=>{
+  const marker=L.marker([p.lat,p.lon],{icon:L.divIcon({className:'explorer-icon',html:pinHtml(p),iconSize:[42,42],iconAnchor:[21,39],popupAnchor:[0,-30]})});
+  marker.bindPopup('<div class="map-popup"><strong>'+safe(p.name)+'</strong><small>'+safe(p.category)+' · '+(p.price_two===null?'стоимость не указана':money(p.price_two) +' за двоих')+'</small><a href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">Открыть маршрут ↗</a><div><button class="map-pick" data-map-pick="'+p.id+'" data-pick-status="wish">♡ Хочу</button><button class="map-pick" data-map-pick="'+p.id+'" data-pick-status="must">★ Точно</button><button class="map-pick" data-map-pick="'+p.id+'" data-pick-status="done">✓ Были</button></div></div>');
+  marker.on('click',()=>{mapSelectedId=p.id;highlightExplorerList()});
+  marker.addTo(explorerLayer);explorerMarkers.set(p.id,marker);bounds.push([p.lat,p.lon]);
+ });
+ $('[data-map-id]').forEach(b=>b.onclick=()=>focusExplorer(Number(b.dataset.mapId)));
+ if(fit&&bounds.length)explorerMap.fitBounds(L.latLngBounds(bounds).pad(.16),{maxZoom:12});
+}
+function highlightExplorerList(){
+ $('[data-map-id]').forEach(b=>b.classList.toggle('active',Number(b.dataset.mapId)===mapSelectedId));
+}
+function focusExplorer(id){
+ const m=explorerMarkers.get(id);if(!m)return;
+ mapSelectedId=id;highlightExplorerList();
+ explorerMap.setView(m.getLatLng(),Math.max(13,explorerMap.getZoom()),{animate:true});m.openPopup();
+}
+function renderUnmapped(){
+ const q=($('#unmappedSearch')?.value||'').trim().toLowerCase();
+ const entries=noGeoPlaces.filter(p=>(p.name+' '+(p.area||'')).toLowerCase().includes(q));
+ $('#unmappedList').innerHTML=entries.slice(0,65).map(p=>'<div class="unmapped-item"><span>'+safe(iconFor(p.category))+' '+safe(p.name)+'</span><a href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">Найти ↗</a></div>').join('');
+ if(entries.length>65)$('#unmappedList').insertAdjacentHTML('beforeend','<div class="area">Показаны первые 65 из '+entries.length+' — уточни поиск.</div>');
+}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-map-pick]');if(!b)return;
+ const id=Number(b.dataset.mapPick),st=b.dataset.pickStatus;
+ state[id]=state[id]===st?'other':st;persist();renderCards();renderExplorer();explorerMarkers.get(id)?.openPopup();
+});
 
 function persist() {
   try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
@@ -448,6 +590,7 @@ $$('[data-tab]').forEach(btn => btn.addEventListener('click', () => {
   $$('[data-tab]').forEach(x => x.classList.toggle('active', x === btn));
   $$('.pane').forEach(p => p.classList.toggle('active', p.id === btn.dataset.tab));
   if (btn.dataset.tab === 'routes') { initMap(); showRoute(); }
+  if (btn.dataset.tab === 'allmap') { initExplorer(); setTimeout(()=>explorerMap?.invalidateSize(),100); }
 }));
 $('#focusRoute').onclick = showRoute;
 $('#exportState').onclick = exportState;
