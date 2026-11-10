@@ -1,0 +1,22 @@
+name: Guide smoke tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tests/smoke.cjs'
+      - '.github/workflows/smoke.yml'
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test data integrity and JavaScript startup
+        run: node tests/smoke.cjs
