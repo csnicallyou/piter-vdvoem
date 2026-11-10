@@ -327,6 +327,13 @@
    if(d.unassign){delete plans[String(d.unassign)];save();renderRoutes();notify('Убрано из этого дня');return}
    if(d.focus){mapFocus=String(d.focus);renderMap(false);return}
   });
+  $('#homeSearchForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const query=$('#homeSearch').value.trim();
+    collection='';cat='';status='';price='';catalogPage=0;search=query;
+    navigate('catalog');
+    $('#catalogSearch').focus();
+  });
   $('#catalogSearch').addEventListener('input',e=>{search=e.target.value;catalogPage=0;renderCatalog()});
   $('#catalogStatus').addEventListener('change',e=>{status=e.target.value;catalogPage=0;renderCatalog()});
   $('#catalogPrice').addEventListener('change',e=>{price=e.target.value;catalogPage=0;renderCatalog()});
