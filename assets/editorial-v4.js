@@ -6,7 +6,7 @@
   if(!toggle)return;
   function stored(){try{return localStorage.getItem(key)}catch(e){return null}}
   function save(value){try{localStorage.setItem(key,value)}catch(e){}}
-  const preferred=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  const preferred='light'; // The approved light art direction is the default; dark is an explicit option.
   function apply(value){
     const theme=value==='dark'?'dark':'light';
     root.setAttribute('data-theme',theme);
