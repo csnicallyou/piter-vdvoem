@@ -23,7 +23,7 @@ new vm.Script(code,{filename:'guide-app.js'});
 const elements = new Map();
 function stub(id) {
   if(!elements.has(id)){
-    const obj={value:'',textContent:'',innerHTML:'',dataset:{},style:{},classList:{toggle(){},add(){},remove(){}},addEventListener(){},setAttribute(){},focus(){},querySelectorAll(){return [];}};
+    const obj={value:'',textContent:'',innerHTML:'',dataset:{},style:{},classList:{toggle(){},add(){},remove(){},contains(){return false}},addEventListener(){},setAttribute(){},focus(){},querySelectorAll(){return [];}};
     elements.set(id,obj);
   }
   return elements.get(id);
@@ -48,4 +48,9 @@ vm.runInContext(code,ctx,{timeout:5000});
 assert.equal(stub('#totalPlaces').textContent,305,'Catalog initialized');
 assert.equal(stub('#mappedStat').textContent,db.places.filter(p=>p.lat!=null).length,'Map count initialized');
 assert.match(stub('#cards').innerHTML,/<article/,'Catalog cards rendered');
+vm.runInContext("setStatus(1, 'wish')",ctx,{timeout:1000});
+assert.equal(stub('#savedWishCount').textContent,1,'Saved items update when selected');
+vm.runInContext("assignToDay(1, db.routes[0].day)",ctx,{timeout:1000});
+assert.match(stub('#savedCards').innerHTML,/data-plan-id=/,'Saved place day selector rendered');
+assert(vm.runInContext("routeStopsFor(routes[0]).some(s=>s.id===1)",ctx,{timeout:1000}),'Assigned stop appears in route');
 console.log('PASS: JavaScript parses, '+db.places.length+' places, '+db.routes.length+' days, '+db.places.filter(p=>p.lat!=null).length+' pins; app initializes.');
