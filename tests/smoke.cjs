@@ -20,6 +20,12 @@ assert(html.includes('assets/app-v3.js'),'App is linked');
 assert(html.includes('assets/editorial-v4.css'),'Editorial style is linked');
 assert(html.includes('assets/editorial-v4.js'),'Theme controller is linked');
 assert(html.includes('id="themeSwitch"'),'Theme switch exists');
+for(const asset of ['site-hero-main.webp','site-heart.webp','site-star.webp','site-lily.webp','site-architecture.webp','site-water.webp']){
+ assert(fs.existsSync('assets/art/'+asset),'Generated visual asset is packaged: '+asset);
+ assert(html.includes('assets/art/'+asset),'Generated visual asset is used on the page: '+asset);
+}
+assert(editorialCSS.includes('site-hero-main.webp'),'Hero artwork has responsive styling');
+
 assert(html.includes('class="editorial-hero"'),'Redesigned hero exists');
 assert(editorialCSS.includes('data-theme="dark"'),'Dark theme has custom material tokens');
 assert(editorialCSS.includes('@media(max-width:680px)'),'Mobile breakpoint exists');
