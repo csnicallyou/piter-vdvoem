@@ -3,6 +3,8 @@ const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const html=fs.readFileSync('index.html','utf8');
 const code=fs.readFileSync('assets/app-v3.js','utf8');
+const themeCode=fs.readFileSync('assets/editorial-v4.js','utf8');
+const editorialCSS=fs.readFileSync('assets/editorial-v4.css','utf8');
 const dataMatch=html.match(/<script id="db" type="application\/json">([\s\S]*?)<\/script>/);
 assert(dataMatch,'Embedded catalog data is present');
 const db=JSON.parse(dataMatch[1]);
@@ -15,7 +17,14 @@ for(const day of db.routes){for(const stop of day.stops)assert(db.places.some(p=
 for(const page of ['home','catalog','map','favorites','routes'])assert(html.includes('id="page-'+page+'"'),'Page exists '+page);
 assert(html.includes('assets/app-v3.css'),'Style is linked');
 assert(html.includes('assets/app-v3.js'),'App is linked');
+assert(html.includes('assets/editorial-v4.css'),'Editorial style is linked');
+assert(html.includes('assets/editorial-v4.js'),'Theme controller is linked');
+assert(html.includes('id="themeSwitch"'),'Theme switch exists');
+assert(html.includes('class="editorial-hero"'),'Redesigned hero exists');
+assert(editorialCSS.includes('data-theme="dark"'),'Dark theme has custom material tokens');
+assert(editorialCSS.includes('@media(max-width:680px)'),'Mobile breakpoint exists');
 new vm.Script(code,{filename:'app-v3.js'});
+new vm.Script(themeCode,{filename:'editorial-v4.js'});
 const elements=new Map();
 function node(key){
  if(!elements.has(key)){
@@ -26,6 +35,7 @@ function node(key){
 }
 const docEvents={};
 const document={
+ documentElement:{setAttribute(name,value){this[name]=value},getAttribute(name){return this[name]}},
  getElementById(id){return id==='db'?{textContent:dataMatch[1]}:node('#'+id)},
  querySelector(sel){return node(sel)},
  querySelectorAll(){return []},
@@ -35,7 +45,7 @@ const document={
 const store=new Map();
 const context={
  document,console,Math,Map,Set,Number,Array,String,Date,JSON,Intl,
- window:{scrollTo(){},addEventListener(){}},
+ window:{scrollTo(){},addEventListener(){},matchMedia(){return {matches:false}}},
  location:{hash:''},
  history:{replaceState(){}},
  localStorage:{getItem(k){return store.get(k)||null},setItem(k,v){store.set(k,v)}},
@@ -45,6 +55,8 @@ const context={
 };
 vm.createContext(context);
 vm.runInContext(code,context,{timeout:5000});
+vm.runInContext(themeCode,context,{timeout:5000});
+assert.equal(document.documentElement['data-theme'],'light','Light theme is initialized');
 assert.equal(node('#topCount').textContent,'305 мест','App booted');
 assert.match(node('#metrics').innerHTML,/305/,'Home metrics rendered');
 assert.match(node('#categories').innerHTML,/category-tile/,'Home categories rendered');
@@ -62,4 +74,5 @@ assert.match(node('#dayTabs').innerHTML,/day-tab/,'Route day tabs render');
 assert.match(node('#stops').innerHTML,/stop/,'Route stops render');
 click({nav:'map'});
 assert.match(node('#mapCount').textContent,/123/,'Map filter count shown');
+assert.match(node('#homeMapCount').textContent,/123/,'Home map count shown');
 console.log('PASS: '+db.places.length+' places, '+db.routes.length+' itineraries, 123 map pins; home/catalog/saved/routes/map initialize.');
