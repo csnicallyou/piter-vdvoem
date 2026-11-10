@@ -28,6 +28,8 @@
  let states=load(STORAGE,{}),plans=load(PLAN,{}),orders=load(ORDER,{});
  let page='home',cat='',search='',status='',price='',sort='name',catalogPage=0,showOnly='all',collection='';
  let dayIndex=0,selectedPlace=null,map=null,mapLayer=null,routeMap=null,routeLayer=null;
+ let homeMap=null,homeMapLayer=null;
+ const cityCenter=[59.93863,30.31413];
  let mapCat='',mapSearch='',mapOnly='all',mapFocus=null,mapInitialized=false;
  let toastTimeout=0;
  const save=()=>{try{localStorage.setItem(STORAGE,JSON.stringify(states));localStorage.setItem(PLAN,JSON.stringify(plans));localStorage.setItem(ORDER,JSON.stringify(orders))}catch(e){}};
@@ -71,6 +73,8 @@
   $('#categories').innerHTML=spotlight.map(({c,i})=>'<button class="category-tile" data-category="'+i+'" style="--category-background:url(&quot;'+categoryArt(c)+'&quot;)"><span class="category-icon">'+ico(c)+'</span><div><strong>'+esc(editorialNames[c])+'</strong><br><small>'+counts[c]+' мест</small></div></button>').join('');
   $('#homeSaved').textContent=saved.length+' мест в избранном';
   $('#homeRoutes').textContent=routes.length+' дней';
+  initHomeMap();
+  renderHomeMap();
  }
  function statusLabel(st){return {wish:'♡ Хочу',must:'★ Обязательно',done:'✓ Посетили'}[st]||'Добавить'}
  function renderChips(container,active,action){
@@ -128,6 +132,7 @@
   if(page==='catalog')renderCatalog();
   if(page==='favorites')renderFavorites();
   if(page==='map')renderMap(false);
+  renderHomeMap();
   if(selectedPlace===id)$('#detailStatus').value=getStatus(id);
   notify(states[id]==='other'?'Место убрано из списка':'Отметка сохранена');
  }
@@ -198,6 +203,32 @@
   const q=mapSearch.trim().toLowerCase();
   return geo.filter(p=>(!mapCat||p.category===mapCat)&&(!q||(p.name+' '+(p.area||'')).toLowerCase().includes(q))&&(mapOnly!=='saved'||getStatus(p.id)!=='other'));
  }
+ function mapPin(p,compact=false){
+  const st=getStatus(p.id),saved=st==='wish'||st==='must';
+  const html='<span class="city-pin '+(saved?'is-saved ':'')+(st==='done'?'is-visited':'')+(compact?' compact':'')+'" aria-hidden="true"><span>'+ico(p)+'</span></span>';
+  return L.divIcon({className:'city-pin-wrap',html,iconSize:compact?[34,34]:[42,42],iconAnchor:compact?[17,30]:[21,39],popupAnchor:[0,compact?-30:-38]});
+ }
+ function mapPopup(p){
+  const st=getStatus(p.id);
+  return '<div class="city-map-popup"><div class="popup-category">'+esc(p.category)+'</div><strong>'+esc(p.name)+'</strong><small>'+esc(placeWhere(p))+'</small><div class="popup-actions"><button data-map-detail="'+p.id+'">Подробнее ↗</button><button data-map-save="'+p.id+'">'+(st==='wish'||st==='must'?'♥ Сохранено':'♡ Хочу')+'</button></div></div>';
+ }
+ function initHomeMap(){
+  if(homeMap||!window.L||!$('#homeRealMap'))return;
+  homeMap=L.map('homeRealMap',{scrollWheelZoom:false,zoomControl:false,attributionControl:true,preferCanvas:true}).setView(cityCenter,12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{minZoom:9,maxZoom:19,attribution:'© OpenStreetMap'}).addTo(homeMap);
+  L.control.zoom({position:'bottomright'}).addTo(homeMap);
+  homeMapLayer=L.layerGroup().addTo(homeMap);
+  renderHomeMap();
+  setTimeout(()=>homeMap.invalidateSize(),130);
+ }
+ function renderHomeMap(){
+  if(!homeMapLayer)return;
+  homeMapLayer.clearLayers();
+  const nearest=geo.map(p=>({p,dist:Math.abs(p.lat-cityCenter[0])+Math.abs(p.lon-cityCenter[1])})).sort((a,b)=>a.dist-b.dist).slice(0,110);
+  for(const {p} of nearest){
+   L.marker([p.lat,p.lon],{icon:mapPin(p,true)}).bindPopup(mapPopup(p),{maxWidth:245}).addTo(homeMapLayer);
+  }
+ }
  function initMap(){
   if(mapInitialized||!window.L)return;
   map=L.map('placesMap',{zoomControl:true,scrollWheelZoom:false}).setView([59.94,30.31],10);
@@ -219,14 +250,17 @@
   const bounds=[];
   pts.forEach(p=>{
    const point=[p.lat,p.lon],st=getStatus(p.id);
-   const html='<div class="marker '+(st==='done'?'done':st==='wish'||st==='must'?'saved':'')+'">'+ico(p)+'</div>';
-   const marker=L.marker(point,{icon:L.divIcon({className:'glass-marker',html,iconSize:[39,39],iconAnchor:[19,35],popupAnchor:[0,-30]})});
-   marker.bindPopup('<strong>'+esc(p.name)+'</strong><small>'+esc(p.category)+'</small><div><button data-map-detail="'+p.id+'">Подробнее ↗</button><button data-map-save="'+p.id+'">♡ Сохранить</button></div>');
+   const marker=L.marker(point,{icon:mapPin(p)});
+   marker.bindPopup(mapPopup(p),{maxWidth:275});
    marker.addTo(mapLayer);
    if(mapFocus===String(p.id)){setTimeout(()=>{map.setView(point,14);marker.openPopup()},80)}
    bounds.push(point);
   });
-  if(fit&&bounds.length)map.fitBounds(L.latLngBounds(bounds).pad(.12),{maxZoom:12});
+  if(fit&&bounds.length){
+    // Keep Petersburg readable instead of zooming out to every remote region.
+    if(!mapFocus&&pts.length>35)map.setView(cityCenter,11);
+    else map.fitBounds(L.latLngBounds(bounds).pad(.12),{maxZoom:14});
+  }
   setTimeout(()=>map.invalidateSize(),120);
  }
  function showDetail(id){
