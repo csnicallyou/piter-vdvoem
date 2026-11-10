@@ -1,0 +1,209 @@
+[
+  {
+    "id": 11,
+    "name": "Sea, Signora",
+    "status": "added",
+    "address": "Санкт-Петербург, Большая Морская улица, 30",
+    "lat": 59.933621,
+    "lon": 30.312972,
+    "source": "https://www.google.com/maps/search/?api=1&query=Sea+Signora+Большая+Морская+30"
+  },
+  {
+    "id": 25,
+    "name": "ресторан северянин",
+    "status": "added",
+    "address": "Санкт-Петербург, Столярный переулок, 18/69",
+    "lat": 59.927233,
+    "lon": 30.311927,
+    "source": "https://www.severyanin.me/"
+  },
+  {
+    "id": 57,
+    "name": "EI copitas bar",
+    "status": "added",
+    "address": "Санкт-Петербург, Владимирский проспект, 18",
+    "lat": 59.92916,
+    "lon": 30.34792,
+    "source": "https://yandex.com/maps/org/el_copitas_bar/72067240437/"
+  },
+  {
+    "id": 41,
+    "name": "кафе opetit большая конюшенная 9",
+    "status": "added",
+    "address": "Санкт-Петербург, Большая Конюшенная улица, 9",
+    "lat": 59.939963,
+    "lon": 30.323265,
+    "source": "https://yandex.by/maps/org/opetit/219951920483/"
+  },
+  {
+    "id": 48,
+    "address": "Санкт-Петербург, Кадетская линия, 5 корпус 2Д",
+    "status": "no_reliable_match",
+    "candidates": []
+  },
+  {
+    "id": 99,
+    "name": "МазаПарк",
+    "status": "added",
+    "address": "Санкт-Петербург, Бухарестская улица, 30/32",
+    "lat": 59.831271,
+    "lon": 30.420833,
+    "source": "https://mazapark.ru/"
+  },
+  {
+    "id": 112,
+    "name": "Кинотеатр «Родина»",
+    "status": "added",
+    "address": "Санкт-Петербург, Караванная улица, 12",
+    "lat": 59.936213,
+    "lon": 30.342136,
+    "source": "https://afisha.yandex.ru/saint-petersburg/cinema/places/rodina-spb"
+  },
+  {
+    "id": 156,
+    "address": "Санкт-Петербург, Большой проспект Васильевского острова, 74",
+    "status": "no_reliable_match",
+    "candidates": []
+  },
+  {
+    "id": 181,
+    "address": "Санкт-Петербург, 13-я линия Васильевского острова, 70",
+    "status": "no_reliable_match",
+    "candidates": []
+  },
+  {
+    "id": 23,
+    "name": "ресторан в синагоге лермонтовский проспект 2",
+    "status": "added",
+    "address": "Санкт-Петербург, Лермонтовский проспект, 2",
+    "lat": 59.924706,
+    "lon": 30.291784,
+    "source": "https://sinagoga.jeps.ru/sinagoga/restoran-lexajm.html"
+  },
+  {
+    "id": 299,
+    "name": "Котокафе Soulmate",
+    "status": "added",
+    "address": "Санкт-Петербург, улица Куйбышева, 9/8",
+    "lat": 59.95509,
+    "lon": 30.328204,
+    "source": "https://www.soulmatespb.com/"
+  },
+  {
+    "id": 47,
+    "name": "кофейня во дворце кваренги — Казанская 7",
+    "status": "added",
+    "address": "Санкт-Петербург, Казанская улица, 7",
+    "lat": 59.925296,
+    "lon": 30.429174,
+    "source": "https://www.google.com/maps/search/?api=1&query=Казанская+7+Санкт-Петербург"
+  },
+  {
+    "id": 211,
+    "name": "дворец Кваренги Казанская 7",
+    "status": "added",
+    "address": "Санкт-Петербург, Казанская улица, 7",
+    "lat": 59.925296,
+    "lon": 30.429174,
+    "source": "https://www.google.com/maps/search/?api=1&query=Казанская+7+Санкт-Петербург"
+  },
+  {
+    "id": 213,
+    "name": "дворик на Ковенском переулке 14 Koven Garden",
+    "status": "added",
+    "address": "Санкт-Петербург, Ковенский переулок, 14",
+    "lat": 59.937669,
+    "lon": 30.359085,
+    "source": "https://www.google.com/maps/search/?api=1&query=Ковенский+14+Санкт-Петербург"
+  },
+  {
+    "id": 217,
+    "name": "Кирочная, 40 — белые лестницы",
+    "status": "added",
+    "address": "Санкт-Петербург, Кирочная улица, 40",
+    "lat": 59.944269,
+    "lon": 30.365317,
+    "source": "https://www.google.com/maps/search/?api=1&query=Кирочная+40+Санкт-Петербург"
+  },
+  {
+    "id": 227,
+    "name": "секретный дворик 15 линия ВО 2/27",
+    "status": "added",
+    "address": "Санкт-Петербург, 15-я линия Васильевского острова, 2/27",
+    "lat": 59.936777,
+    "lon": 30.272446,
+    "source": "https://www.google.com/maps/search/?api=1&query=15-я+линия+2/27+Санкт-Петербург"
+  },
+  {
+    "id": 220,
+    "name": "необычный квартал у Ладожского вокзала Магнитогорская 71",
+    "status": "added",
+    "address": "Санкт-Петербург, Магнитогорская улица, 71",
+    "lat": 59.940629,
+    "lon": 30.43818,
+    "source": "https://www.google.com/maps/search/?api=1&query=Магнитогорская+71+Санкт-Петербург"
+  },
+  {
+    "id": 116,
+    "name": "Магнитогорская, 53 — «сталинки-призраки»",
+    "status": "added",
+    "address": "Санкт-Петербург, Магнитогорская улица, 53",
+    "lat": 59.940412,
+    "lon": 30.435675,
+    "source": "https://www.google.com/maps/search/?api=1&query=Магнитогорская+53+Санкт-Петербург"
+  },
+  {
+    "id": 139,
+    "name": "Проспект Обуховской Обороны, 71 — заброшенное здание",
+    "status": "added",
+    "address": "Санкт-Петербург, проспект Обуховской Обороны, 71",
+    "lat": 59.902115,
+    "lon": 30.424361,
+    "source": "https://www.google.com/maps/search/?api=1&query=Обуховской+Обороны+71+Санкт-Петербург"
+  },
+  {
+    "id": 143,
+    "name": "турбинная 9 и 11 заброшенный квартал",
+    "status": "added",
+    "address": "Санкт-Петербург, Турбинная улица, 9",
+    "lat": 59.895198,
+    "lon": 30.267132,
+    "source": "https://www.google.com/maps/search/?api=1&query=Турбинная+9+Санкт-Петербург"
+  },
+  {
+    "id": 285,
+    "name": "Церковь на 11-й Красноармейской улице",
+    "status": "added",
+    "address": "Санкт-Петербург, 11-я Красноармейская улица, 11",
+    "lat": 59.912798,
+    "lon": 30.300847,
+    "source": "https://www.google.com/maps/search/?api=1&query=11-я+Красноармейская+11+Санкт-Петербург"
+  },
+  {
+    "id": 94,
+    "name": "бумбастик игровые автоматы ТРК Питерлэнд",
+    "status": "added",
+    "address": "Санкт-Петербург, Приморский проспект, 72",
+    "lat": 59.981634,
+    "lon": 30.210158,
+    "source": "https://www.google.com/maps/search/?api=1&query=ТРК+Питерлэнд"
+  },
+  {
+    "id": 89,
+    "name": "бесплатная фотобудка в Zarina в Галерее",
+    "status": "added",
+    "address": "Санкт-Петербург, Лиговский проспект, 30А",
+    "lat": 59.930062,
+    "lon": 30.361467,
+    "source": "https://www.google.com/maps/search/?api=1&query=ТРЦ+Галерея+СПб"
+  },
+  {
+    "id": 105,
+    "name": "фотобудка ТЦ ПИК memopix",
+    "status": "added",
+    "address": "Санкт-Петербург, улица Ефимова, 2",
+    "lat": 59.926429,
+    "lon": 30.320931,
+    "source": "https://www.google.com/maps/search/?api=1&query=ТРК+ПИК+СПб"
+  }
+]
