@@ -70,7 +70,8 @@
   const counts=Object.fromEntries(categories.map(c=>[c,places.filter(p=>p.category===c).length]));
   const editorialNames={'Поесть — рестораны':'Еда','Кофе, десерты и перекус':'Кофе','Бары и напитки':'Бары','Игры и активные развлечения':'Игры','Заброшки, форты и руины':'Необычное','Музеи и планетарии':'Культура','Прогулки и природа':'Прогулки'};
   const spotlight=categories.map((c,i)=>({c,i})).filter(({c})=>c in editorialNames).slice(0,6);
-  $('#categories').innerHTML=spotlight.map(({c,i})=>'<button class="category-tile" data-category="'+i+'" style="--category-background:url(&quot;'+categoryArt(c)+'&quot;)"><span class="category-icon">'+ico(c)+'</span><div><strong>'+esc(editorialNames[c])+'</strong><br><small>'+counts[c]+' мест</small></div></button>').join('');
+  const artIcons=['site-water.webp','site-lily.webp','site-heart.webp','site-star.webp','site-architecture.webp','site-hero-main.webp'];
+  $('#categories').innerHTML=spotlight.map(({c,i},position)=>'<button class="category-tile" data-category="'+i+'"><span class="category-icon"><img src="./assets/art/'+artIcons[position]+'" alt="" loading="lazy" decoding="async"></span><strong>'+esc(editorialNames[c])+'</strong><small>'+counts[c]+' мест</small></button>').join('');
   $('#homeSaved').textContent=saved.length+' мест в избранном';
   $('#homeRoutes').textContent=routes.length+' дней';
   initHomeMap();
