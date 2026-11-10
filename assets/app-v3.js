@@ -28,7 +28,7 @@
  let states=load(STORAGE,{}),plans=load(PLAN,{}),orders=load(ORDER,{});
  let page='home',cat='',search='',status='',price='',sort='name',catalogPage=0,showOnly='all',collection='';
  let dayIndex=0,selectedPlace=null,map=null,mapLayer=null,routeMap=null,routeLayer=null;
- let homeMap=null,homeMapLayer=null;
+ let homeMap=null,homeMapLayer=null,homeMapCategory='all';
  const cityCenter=[59.93863,30.31413];
  let mapCat='',mapSearch='',mapOnly='all',mapFocus=null,mapInitialized=false;
  let toastTimeout=0;
@@ -53,7 +53,7 @@
   $$('.page').forEach(e=>e.classList.toggle('active',e.id==='page-'+target));
   $$('[data-nav]').forEach(e=>{const active=e.dataset.nav===target;e.classList.toggle('active',active);e.setAttribute('aria-current',active?'page':'false')});
   updateGlobal();
-  if(target==='home')renderHome();
+  if(target==='home'){renderHome();setTimeout(()=>homeMap?.invalidateSize(),120)}
   if(target==='catalog')renderCatalog();
   if(target==='favorites')renderFavorites();
   if(target==='routes')renderRoutes();
@@ -224,7 +224,11 @@
  function renderHomeMap(){
   if(!homeMapLayer)return;
   homeMapLayer.clearLayers();
-  const nearest=geo.map(p=>({p,dist:Math.abs(p.lat-cityCenter[0])+Math.abs(p.lon-cityCenter[1])})).sort((a,b)=>a.dist-b.dist).slice(0,110);
+  const catMatch=p=>homeMapCategory==='all'
+   ||(homeMapCategory==='food'&&/Поесть|Кофе|Бары/i.test(p.category))
+   ||(homeMapCategory==='culture'&&/Музеи|Галереи|Дворцы|Храмы/i.test(p.category))
+   ||(homeMapCategory==='unusual'&&/Заброшки|Игры|необычные/i.test(p.category));
+  const nearest=geo.filter(catMatch).map(p=>({p,dist:Math.abs(p.lat-cityCenter[0])+Math.abs(p.lon-cityCenter[1])})).sort((a,b)=>a.dist-b.dist).slice(0,110);
   for(const {p} of nearest){
    L.marker([p.lat,p.lon],{icon:mapPin(p,true)}).bindPopup(mapPopup(p),{maxWidth:245}).addTo(homeMapLayer);
   }
@@ -300,6 +304,12 @@
   document.addEventListener('click',e=>{
    const button=e.target.closest('button,[data-nav],[data-detail]');if(!button)return;
    const d=button.dataset;
+   if(d.homeMapCat){
+     homeMapCategory=d.homeMapCat;
+     $('[data-home-map-cat]').forEach(el=>{const active=el.dataset.homeMapCat===homeMapCategory;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
+     renderHomeMap();
+     return;
+   }
    if(d.collection){collection=d.collection;cat='';search='';status='';price='';sort='name';catalogPage=0;navigate('catalog');return}
    if(d.routePreview!==undefined){dayIndex=Number(d.routePreview);navigate('routes');return}
    if(d.nav){if(d.nav==='catalog'){collection='';cat='';catalogPage=0}navigate(d.nav);return}
