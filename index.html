@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="./assets/app-v3.css?v=8">
 <link rel="stylesheet" href="./assets/editorial-v4.css?v=7">
 <link rel="stylesheet" href="./assets/editorial-inner-v1.css?v=6">
+<link rel="stylesheet" href="./assets/atelier-v1.css?v=1">
 </head>
 <body>
 <div class="ui">
@@ -76,17 +77,25 @@
           <div class="ed-category-row" id="categories"></div>
           <button class="ed-round-forward" data-nav="catalog" aria-label="Все категории">↗</button>
         </div>
-        <div class="editorial-content">
-          <div class="ed-collections">
-            <div class="ed-section-head"><h2>Подборки <em>города</em></h2><button data-nav="catalog" class="ed-text-link">Все места ↗</button></div>
-            <div class="ed-collection-grid">
-              <button class="ed-collection-card midnight" style="background-image:url(./assets/art/site-water.webp)" data-collection="night"><span class="ed-card-number">01 / СКРЫТОЕ</span><strong>Город<br>после полуночи</strong><span>Бары · Прогулки · Атмосфера ↗</span></button>
-              <button class="ed-collection-card architecture" style="background-image:url(./assets/art/site-architecture.webp)" data-collection="architecture"><span class="ed-card-number">02 / ФОРМА</span><strong>Архитектура<br>и индустрия</strong><span>Необычные здания ↗</span></button>
-              <button class="ed-collection-card river" style="background-image:url(./assets/art/site-water.webp)" data-collection="water"><span class="ed-card-number">03 / МЕДЛЕННО</span><strong>По воде<br>и набережным</strong><span>Прогулки · Виды ↗</span></button>
-            </div>
-          </div>
-          <div class="ed-map-preview glass">
-            <div class="ed-section-head"><h2>На одной <em>карте</em></h2><button class="ed-text-link" data-nav="map" type="button">Все места ↗</button></div>
+        <div class="ed-discovery-header">
+          <div><span class="ed-index">02 / ТВОЙ ГОРОД</span><h2>Находи <em>своё.</em></h2></div>
+          <p>Город — это не список достопримечательностей. Это истории, которые хочется прожить.</p>
+        </div>
+        <div class="ed-discovery-grid">
+          <button class="ed-featured-story" data-route-preview="1" type="button">
+            <img src="./assets/art/site-water.webp" alt="" loading="lazy">
+            <span class="ed-story-kicker">МАРШРУТ / 01 — НАСТРОЕНИЕ ГОРОДА</span>
+            <strong>Петербург<br><em>после заката</em></strong>
+            <span class="ed-story-footer"><span>ПРОГУЛКА · НА ДВОИХ</span><span class="ed-glass-arrow">↗</span></span>
+          </button>
+          <section class="ed-collection-index" aria-label="Тематические подборки">
+            <div class="ed-minor-header"><h3>Подборки</h3><button data-nav="catalog" type="button">Все места ↗</button></div>
+            <button class="ed-index-item" data-collection="night" type="button"><img src="./assets/art/site-water.webp" alt="" loading="lazy"><span><strong>Город после полуночи</strong><small>Бары, клубы, настроение</small></span><b>↗</b></button>
+            <button class="ed-index-item" data-collection="architecture" type="button"><img src="./assets/art/site-architecture.webp" alt="" loading="lazy"><span><strong>Архитектура и индустрия</strong><small>Фабрики, дворцы, модерн</small></span><b>↗</b></button>
+            <button class="ed-index-item" data-collection="water" type="button"><img src="./assets/art/site-hero-main.webp" alt="" loading="lazy"><span><strong>У воды</strong><small>Острова, мосты, набережные</small></span><b>↗</b></button>
+          </section>
+          <section class="ed-map-preview glass" aria-label="Карта мест">
+            <div class="ed-minor-header"><h3>На карте</h3><button class="ed-text-link" data-nav="map" type="button">Открыть ↗</button></div>
             <div class="ed-map-image">
               <div id="homeRealMap" aria-label="Интерактивная карта мест Петербурга"></div>
               <div class="home-map-label">САНКТ-ПЕТЕРБУРГ <span> / 59°56′ N</span></div>
@@ -99,13 +108,15 @@
             </div>
             <div class="ed-map-footer">
               <span class="ed-map-count" id="homeMapCount">123 точки на карте</span>
-              <button type="button" class="ed-map-open" data-nav="map">Исследовать карту <span aria-hidden="true">↗</span></button>
+              <button type="button" class="ed-map-open" data-nav="map">Весь город ↗</button>
             </div>
-          </div>
-        </div>
-        <div class="editorial-route-band">
-          <div class="ed-section-head"><h2>Готовые <em>маршруты</em></h2><button data-nav="routes" class="ed-text-link">Смотреть все ↗</button></div>
-          <div class="ed-route-cards"><button data-route-preview="0"><span>21 НОЯБРЯ / ДЕНЬ 01</span><strong>Прилёт и вечер в центре</strong><small>⌖ Первые впечатления</small><b>↗</b></button><button data-route-preview="1"><span>22 НОЯБРЯ / ДЕНЬ 02</span><strong>Классический центр</strong><small>⌖ Музеи и архитектура</small><b>↗</b></button><button data-route-preview="2"><span>23 НОЯБРЯ / ДЕНЬ 03</span><strong>Васильевский и порт</strong><small>⌖ Набережные и индустрия</small><b>↗</b></button></div>
+          </section>
+          <section class="ed-trips-index" aria-label="Маршруты поездки">
+            <div class="ed-minor-header"><h3>Мои маршруты</h3><button data-nav="routes" type="button">Все дни ↗</button></div>
+            <button class="ed-trip-line" data-route-preview="0" type="button"><span class="ed-trip-date">21.11</span><span><strong>Прилёт и вечер в центре</strong><small>День 01 · первые впечатления</small></span><b>↗</b></button>
+            <button class="ed-trip-line" data-route-preview="1" type="button"><span class="ed-trip-date">22.11</span><span><strong>Классический центр</strong><small>День 02 · музеи и архитектура</small></span><b>↗</b></button>
+            <button class="ed-trip-line" data-route-preview="2" type="button"><span class="ed-trip-date">23.11</span><span><strong>Васильевский и порт</strong><small>День 03 · прогулки и индустрия</small></span><b>↗</b></button>
+          </section>
         </div>
         <div id="metrics" class="ed-metrics"></div>
       </div>
