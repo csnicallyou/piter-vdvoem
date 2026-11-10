@@ -496,11 +496,11 @@ function renderExplorer(fit=false){
   marker.on('click',()=>{mapSelectedId=p.id;highlightExplorerList()});
   marker.addTo(explorerLayer);explorerMarkers.set(p.id,marker);bounds.push([p.lat,p.lon]);
  });
- $('[data-map-id]').forEach(b=>b.onclick=()=>focusExplorer(Number(b.dataset.mapId)));
+ $$('[data-map-id]').forEach(b=>b.onclick=()=>focusExplorer(Number(b.dataset.mapId)));
  if(fit&&bounds.length)explorerMap.fitBounds(L.latLngBounds(bounds).pad(.16),{maxZoom:12});
 }
 function highlightExplorerList(){
- $('[data-map-id]').forEach(b=>b.classList.toggle('active',Number(b.dataset.mapId)===mapSelectedId));
+ $$('[data-map-id]').forEach(b=>b.classList.toggle('active',Number(b.dataset.mapId)===mapSelectedId));
 }
 function focusExplorer(id){
  const m=explorerMarkers.get(id);if(!m)return;
@@ -538,23 +538,23 @@ function renderSaved(){
     const label={wish:'♡ Хочу',must:'★ Обязательно',done:'✓ Посетили'}[st];
     return '<article class="saved-place"><div class="saved-cat">'+safe(iconFor(p.category)+' '+p.category)+'</div><h3>'+safe(p.name)+'</h3><div class="area">'+safe(p.verified_address||p.area||'Адрес уточняется')+'</div><div class="saved-price">'+(p.price_two===null||p.price_two===undefined?'Стоимость не уточнена':money(p.price_two)+' за двоих')+'</div><div><span class="saved-badge '+safe(st)+'">'+label+'</span></div><div class="saved-actions"><button class="action" data-saved-id="'+p.id+'" data-saved-state="'+(st==='done'?'wish':'done')+'">'+(st==='done'?'↶ Вернуть':'✓ Посетили')+'</button><button class="action" data-saved-id="'+p.id+'" data-saved-state="other">Убрать</button><a class="action link" href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">↗ Карта</a></div></article>';
   }).join(''):'<div class="empty">Здесь пока пусто. Отметь интересные места в каталоге кнопкой ♡ «Хочу» или ★ «Точно».</div>';
-  $('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
-  $('[data-saved-filter]').forEach(b=>b.classList.toggle('active',b.dataset.savedFilter===savedFilter));
+  $$('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
+  $$('[data-saved-filter]').forEach(b=>b.classList.toggle('active',b.dataset.savedFilter===savedFilter));
 }
-$('[data-saved-filter]').forEach(b=>b.onclick=()=>{savedFilter=b.dataset.savedFilter;renderSaved()});
+$$('[data-saved-filter]').forEach(b=>b.onclick=()=>{savedFilter=b.dataset.savedFilter;renderSaved()});
 $('#savedToMap').onclick=()=>{openPane('allmap');if(explorerMap){mapFavoritesOnly=true;$('#mapOnlyChosen').classList.add('primary');renderExplorer(true)}};
 function openPane(tab){
   if(!document.getElementById(tab))return;
-  $('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));
-  $('.mobile-nav-item').forEach(x=>x.classList.toggle('active',x.dataset.go===tab));
-  $('.pane').forEach(p=>p.classList.toggle('active',p.id===tab));
+  $$('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));
+  $$('.mobile-nav-item').forEach(x=>x.classList.toggle('active',x.dataset.go===tab));
+  $$('.pane').forEach(p=>p.classList.toggle('active',p.id===tab));
   if(tab==='saved')renderSaved();
   if(tab==='allmap'){initExplorer();setTimeout(()=>explorerMap?.invalidateSize(),160);}
   if(tab==='routes'){initMap();showRoute();}
   window.scrollTo({top:0,behavior:'instant'});
   try{history.replaceState(null,'','#'+tab)}catch(e){}
 }
-$('.mobile-nav-item').forEach(b=>b.onclick=()=>openPane(b.dataset.go));
+$$('.mobile-nav-item').forEach(b=>b.onclick=()=>openPane(b.dataset.go));
 window.addEventListener('hashchange',()=>{const tab=location.hash.slice(1);if(['catalog','saved','allmap','routes'].includes(tab))openPane(tab)});
 
 function persist() {
@@ -720,7 +720,7 @@ async function importState(event) {
     renderCards();
   });
 });
-$('[data-tab]').forEach(btn => btn.addEventListener('click', () => openPane(btn.dataset.tab)));
+$$('[data-tab]').forEach(btn => btn.addEventListener('click', () => openPane(btn.dataset.tab)));
 $('#focusRoute').onclick = showRoute;
 $('#exportState').onclick = exportState;
 $('#importState').onchange = importState;
