@@ -247,3 +247,66 @@ html[data-theme="dark"] .ed-lily-image{filter:brightness(.77)}
  html[data-theme="dark"] .editorial-hero h1,html[data-theme="dark"] .ed-lead{text-shadow:0 1px 14px #161519}
  .ed-collection-card{min-height:195px}
 }
+
+/* Editorial supporting pages / photographic materials, not synthetic placeholder illustrations */
+#page-catalog>.section-head:first-child,
+#page-favorites>.section-head:first-child,
+#page-routes>.section-head:first-child{
+ position:relative;isolation:isolate;overflow:hidden;
+ min-height:175px;padding:28px clamp(18px,3vw,40px);
+ margin-bottom:20px;border-radius:29px;
+ border:1px solid var(--stroke);
+ background:linear-gradient(120deg,var(--glass-strong),var(--glass));
+ box-shadow:var(--shadow),var(--inset)
+}
+#page-catalog>.section-head:first-child::after,
+#page-favorites>.section-head:first-child::after,
+#page-routes>.section-head:first-child::after{
+ content:"";position:absolute;right:-3%;top:-65%;height:245%;width:46%;
+ background-size:contain;background-repeat:no-repeat;background-position:center;
+ opacity:.22;z-index:-1;pointer-events:none;filter:saturate(.68)
+}
+#page-catalog>.section-head:first-child::after{
+ background-image:url("./art/site-architecture.webp");opacity:.28;filter:grayscale(.55)
+}
+#page-favorites>.section-head:first-child::after{
+ background-image:url("./art/site-heart.webp");opacity:.25
+}
+#page-routes>.section-head:first-child::after{
+ background-image:url("./art/site-hero-main.webp");opacity:.26
+}
+#page-catalog>.section-head h2,
+#page-favorites>.section-head h2,
+#page-routes>.section-head h2{font-size:clamp(40px,4.5vw,67px)}
+#page-catalog>.section-head p,
+#page-favorites>.section-head p,
+#page-routes>.section-head p{max-width:50ch;line-height:1.6}
+#page-catalog .place-card,
+#page-favorites .fav-row,
+#page-routes .day-panel,
+#page-map .map-sidebar{
+ backdrop-filter:blur(16px);
+ -webkit-backdrop-filter:blur(16px);
+ border:1px solid var(--stroke);
+ box-shadow:var(--shadow),var(--inset)
+}
+#page-favorites .favs-aside{position:relative;overflow:hidden}
+#page-favorites .favs-aside::after{
+ content:"";position:absolute;right:-75px;bottom:-90px;width:250px;height:250px;
+ background:url("./art/site-lily.webp") center / contain no-repeat;
+ opacity:.21;pointer-events:none
+}
+html[data-theme="dark"] #page-catalog>.section-head:first-child::after,
+html[data-theme="dark"] #page-favorites>.section-head:first-child::after,
+html[data-theme="dark"] #page-routes>.section-head:first-child::after{opacity:.14;filter:grayscale(.7)}
+@media(max-width:680px){
+ #page-catalog>.section-head:first-child,
+ #page-favorites>.section-head:first-child,
+ #page-routes>.section-head:first-child{min-height:140px;padding:19px;border-radius:22px}
+ #page-catalog>.section-head:first-child::after,
+ #page-favorites>.section-head:first-child::after,
+ #page-routes>.section-head:first-child::after{width:53%;right:-9%;opacity:.12}
+ #page-catalog>.section-head h2,
+ #page-favorites>.section-head h2,
+ #page-routes>.section-head h2{font-size:clamp(32px,9vw,50px)}
+}
