@@ -26,7 +26,7 @@
  const geo=places.filter(p=>p.lat!=null&&p.lon!=null&&Number.isFinite(Number(p.lat))&&Number.isFinite(Number(p.lon)));
  const load=(k,fallback)=>{try{const v=JSON.parse(localStorage.getItem(k)||'null');return v&&typeof v==='object'?v:fallback}catch(e){return fallback}};
  let states=load(STORAGE,{}),plans=load(PLAN,{}),orders=load(ORDER,{});
- let page='home',cat='',search='',status='',price='',sort='name',catalogPage=0,showOnly='all';
+ let page='home',cat='',search='',status='',price='',sort='name',catalogPage=0,showOnly='all',collection='';
  let dayIndex=0,selectedPlace=null,map=null,mapLayer=null,routeMap=null,routeLayer=null;
  let mapCat='',mapSearch='',mapOnly='all',mapFocus=null,mapInitialized=false;
  let toastTimeout=0;
@@ -80,6 +80,9 @@
   const q=search.toLowerCase().trim();
   let list=places.filter(p=>{
    if(cat&&p.category!==cat)return false;
+   if(collection==='night'&&p.category!=='Бары и напитки')return false;
+   if(collection==='architecture'&&!/Дворцы|Заброшки|Музеи|Галереи/.test(p.category))return false;
+   if(collection==='water'&&!/вода|вод|река|речк|озер|залив|мост|остров|берег|канал|порт|набереж/i.test((p.name||'')+' '+(p.note||'')+' '+(p.area||'')))return false;
    if(q&&!((p.name||'')+' '+(p.area||'')+' '+(p.note||'')+' '+(p.verified_address||'')).toLowerCase().includes(q))return false;
    if(status&&getStatus(p.id)!==status)return false;
    if(price==='known'&&!hasPrice(p))return false;
@@ -113,7 +116,8 @@
   $('#catalogSort').value=sort;
   const all=filteredCatalog();const per=18;const pages=Math.max(1,Math.ceil(all.length/per));
   catalogPage=Math.min(catalogPage,pages-1);
-  $('#catalogCount').textContent='Найдено '+all.length+' из '+places.length;
+  $('#catalogTitle').textContent=({night:'Бары и вечерний город',architecture:'Архитектура и индустрия',water:'У воды и набережных'})[collection]||'Найди своё место';
+  $('#catalogCount').textContent='Найдено '+all.length+' из '+places.length+(collection?' · тематическая подборка':'');
   $('#catalogGrid').innerHTML=all.slice(catalogPage*per,(catalogPage+1)*per).map(placeCard).join('')||'<div class="empty"><strong>Ничего не найдено</strong>Попробуй изменить поиск или фильтры.</div>';
   $('#pager').innerHTML=pages>1?'<button class="btn" data-page-step="-1" '+(catalogPage===0?'disabled':'')+'>← Назад</button><span>'+ (catalogPage+1)+' / '+pages+'</span><button class="btn" data-page-step="1" '+(catalogPage===pages-1?'disabled':'')+'>Вперёд →</button>':'';
  }
@@ -262,9 +266,11 @@
   document.addEventListener('click',e=>{
    const button=e.target.closest('button,[data-nav],[data-detail]');if(!button)return;
    const d=button.dataset;
+   if(d.collection){collection=d.collection;cat='';search='';status='';price='';sort='name';catalogPage=0;navigate('catalog');return}
+   if(d.routePreview!==undefined){dayIndex=Number(d.routePreview);navigate('routes');return}
    if(d.nav){navigate(d.nav);return}
-   if(d.category!==undefined){cat=categories[Number(d.category)];catalogPage=0;navigate('catalog');return}
-   if(d['pickCategory']!==undefined){cat=d.pickCategory===''?'':categories[Number(d.pickCategory)];catalogPage=0;renderCatalog();return}
+   if(d.category!==undefined){collection='';cat=categories[Number(d.category)];catalogPage=0;navigate('catalog');return}
+   if(d['pickCategory']!==undefined){collection='';cat=d.pickCategory===''?'':categories[Number(d.pickCategory)];catalogPage=0;renderCatalog();return}
    if(d.fav){setStatus(d.fav,getStatus(d.fav)==='must'?'must':'wish');return}
    if(d.detail){showDetail(d.detail);return}
    if(d['mapDetail']){showDetail(d.mapDetail);return}
@@ -295,7 +301,7 @@
     closeDetail();navigate('map');
   });
   $('#resetCatalog').addEventListener('click',()=>{
-    cat='';search='';status='';price='';sort='name';catalogPage=0;renderCatalog();
+    cat='';collection='';search='';status='';price='';sort='name';catalogPage=0;renderCatalog();
   });
   $('#resetMap').addEventListener('click',()=>{
     mapCat='';mapSearch='';mapOnly='all';mapFocus=null;renderMap(true);
