@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/geocode_places.py'
+      - '.github/workflows/geocode.yml'
 permissions:
   contents: write
 concurrency:
