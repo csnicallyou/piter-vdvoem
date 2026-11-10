@@ -108,3 +108,24 @@ html[data-theme="dark"] #page-home .category-tile:before{opacity:.1}
  #page-routes .stop-image{width:52px;height:50px}
  #page-routes .stop .stop-actions{grid-column:1/-1;justify-content:flex-end}
 }
+
+/* Utility controls: clean, tactile, accessible */
+.catalog-result-row,.map-result-bar,.route-action-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.catalog-result-row{margin:13px 0 15px}
+.map-result-bar{margin:12px 0}
+.catalog-result-row .result-info,.map-result-bar .result-info{margin:0;flex:1}
+#resetCatalog,#resetMap{min-height:37px;padding:8px 12px;border-radius:999px;font-size:11px;white-space:nowrap;background:var(--glass-strong);border:1px solid var(--stroke);color:var(--ink)}
+.route-action-row{justify-content:flex-start;margin:17px 0}
+.route-action-row .btn{min-height:45px;border-radius:20px}
+#detailOnMap{background:var(--glass-strong);color:var(--ink)}
+#page-catalog .chip:focus-visible,#page-map .map-list-item:focus-visible,#page-routes .stop-actions button:focus-visible{outline:3px solid #b98fa1;outline-offset:3px}
+#page-catalog .chip,#page-routes .day-tab,#page-map .map-list-item{transition:background .18s ease,transform .18s ease}
+#page-routes .stop-actions button:hover{background:var(--glass-strong)}
+#detailModal .drawer-actions{gap:9px}
+#detailModal .drawer-actions .btn{flex:1 1 auto}
+@media(max-width:680px){
+ .catalog-result-row,.map-result-bar{gap:5px}
+ .route-action-row .btn{flex:1 1 100%}
+ #detailModal .drawer-actions{display:grid;grid-template-columns:1fr}
+ #resetCatalog,#resetMap{font-size:10px}
+}
