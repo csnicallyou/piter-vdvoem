@@ -268,7 +268,7 @@
    const d=button.dataset;
    if(d.collection){collection=d.collection;cat='';search='';status='';price='';sort='name';catalogPage=0;navigate('catalog');return}
    if(d.routePreview!==undefined){dayIndex=Number(d.routePreview);navigate('routes');return}
-   if(d.nav){navigate(d.nav);return}
+   if(d.nav){if(d.nav==='catalog'){collection='';cat='';catalogPage=0}navigate(d.nav);return}
    if(d.category!==undefined){collection='';cat=categories[Number(d.category)];catalogPage=0;navigate('catalog');return}
    if(d['pickCategory']!==undefined){collection='';cat=d.pickCategory===''?'':categories[Number(d.pickCategory)];catalogPage=0;renderCatalog();return}
    if(d.fav){setStatus(d.fav,getStatus(d.fav)==='must'?'must':'wish');return}
