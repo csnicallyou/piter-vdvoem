@@ -1,0 +1,78 @@
+
+/* EDITORIAL INNER PAGES / 08
+   Asset-led interiors: keep venue imagery honest (category artwork, not venue photography). */
+#page-catalog,#page-favorites,#page-routes,#page-map{--editorial-accent:#ad9ba5}
+#page-catalog .toolbar,#page-favorites .toolbar,#page-map .map-sidebar,#page-routes .day-panel{
+  background:linear-gradient(132deg,var(--glass-strong),var(--glass));
+  border:1px solid var(--stroke);box-shadow:var(--shadow),var(--inset);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)
+}
+#page-catalog .toolbar,#page-favorites .toolbar{border-radius:25px;padding:12px}
+#page-catalog .search,#page-map .search{border-radius:19px}
+#page-catalog .chip,#page-catalog .toolbar select,#page-favorites .toolbar select,#page-map select{
+  border:1px solid var(--stroke);border-radius:999px;
+  background:var(--glass-strong);color:var(--ink);
+  box-shadow:inset 0 1px #ffffff70
+}
+#page-catalog .chip.active{background:var(--ink);color:var(--bg)}
+#page-catalog .place-grid{gap:18px}
+#page-catalog .place-card{border-radius:27px;overflow:hidden;background:var(--glass);box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease}
+#page-catalog .place-card:hover{transform:translateY(-4px);box-shadow:0 22px 40px #66515c27}
+#page-catalog .place-visual{height:205px;position:relative;isolation:isolate;overflow:hidden;background:#c8b7bd}
+.category-art{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:saturate(.7);transition:transform .35s ease}
+#page-catalog .place-card:hover .category-art{transform:scale(1.055)}
+.place-visual:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(0deg,#27212a88,transparent);pointer-events:none}
+.place-visual .category-symbol{position:absolute;left:18px;bottom:15px;font-size:36px;filter:grayscale(1) drop-shadow(0 4px 7px #0005);z-index:1}
+.place-visual .heart{z-index:3;background:#faf7f1d9;border:1px solid #ffffffcc;backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+.place-visual .place-status{z-index:2}
+.place-card .type{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.place-card h3{font:italic 27px/1.05 Georgia,"Times New Roman",serif;letter-spacing:-.05em}
+.place-card .meta{font-size:12px;color:var(--muted)}
+.place-card .card-end{border-top:1px solid var(--stroke)}
+.place-card .mini-link{background:var(--glass-strong);border:1px solid var(--stroke);border-radius:999px}
+#page-favorites .favs-layout{gap:21px}
+#page-favorites .fav-list{gap:11px}
+#page-favorites .fav-row{border-radius:25px;padding:13px 15px;background:var(--glass);align-items:center}
+#page-favorites .fav-icon{height:77px;width:100px;min-width:100px;display:block;border-radius:19px;position:relative;overflow:hidden;background:#d7c6ca}
+#page-favorites .fav-icon .category-art{width:100%;height:100%}
+#page-favorites .fav-icon .category-symbol{position:absolute;left:8px;bottom:4px;color:white;font-size:21px;filter:drop-shadow(0 1px 2px #0006)}
+#page-favorites .fav-row h3{font:italic 24px/1.1 Georgia,serif;margin:0 0 6px}
+#page-favorites .fav-row small{color:var(--muted)}
+#page-favorites .favs-aside{border-radius:29px}
+#page-favorites .favs-aside h3{font-family:Georgia,serif;letter-spacing:-.06em}
+#page-routes .day-tabs{gap:8px}
+#page-routes .day-tab{border:1px solid var(--stroke);background:var(--glass);box-shadow:var(--inset);border-radius:17px}
+#page-routes .day-tab.selected{background:var(--ink);color:var(--bg)}
+#page-routes .day-panel{border-radius:30px}
+#page-routes .plan-header h3{font:italic clamp(29px,3vw,49px)/1.04 Georgia,serif;letter-spacing:-.06em}
+#page-routes .stop{border-bottom:1px solid var(--stroke);gap:15px;padding:14px 0}
+#page-routes .stop .time{border-radius:13px;background:var(--glass-strong);border:1px solid var(--stroke)}
+#page-routes .stop-description h3{font:italic 22px/1.15 Georgia,serif}
+#page-routes #routeMap{border-radius:20px;overflow:hidden}
+#page-map .map-shell{border-radius:30px}
+#page-map #placesMap{border-radius:23px}
+#page-map .map-sidebar{border-radius:29px}
+#page-map .map-list-item{border-radius:17px;border:1px solid var(--stroke);background:var(--glass);transition:background .2s ease}
+#page-map .map-list-item:hover{background:var(--glass-strong)}
+#page-map .map-list-item .ico{background:linear-gradient(145deg,#fff,#c4bec9);border:1px solid #fff7;border-radius:12px}
+#detailModal .drawer{background:var(--bg);border:1px solid var(--stroke);box-shadow:-25px 0 65px #29232b2d}
+#detailModal .drawer-cover{height:225px;border-radius:25px;position:relative;overflow:hidden;background:#e0cbd5}
+#detailModal .drawer-cover .category-art{width:100%;height:100%;object-fit:cover}
+#detailModal .drawer-cover .category-symbol{position:absolute;bottom:13px;left:18px;font-size:49px;filter:drop-shadow(0 6px 8px #0006)}
+#detailModal h2{font:italic clamp(34px,3.7vw,56px)/1.01 Georgia,serif;letter-spacing:-.065em}
+#detailModal .drawer-info>div{border-color:var(--stroke)}
+html[data-theme="dark"] .category-art{filter:grayscale(.2) saturate(.65) brightness(.68)}
+html[data-theme="dark"] #page-catalog .place-visual{background:#3d3840}
+html[data-theme="dark"] #page-map .map-list-item .ico{background:#534a56}
+html[data-theme="dark"] #detailModal .drawer-cover{background:#332f37}
+html[data-theme="dark"] #page-catalog .chip.active,html[data-theme="dark"] #page-routes .day-tab.selected{background:#decbd4;color:#1c1920}
+@media(max-width:900px){#page-favorites .fav-icon{width:75px;min-width:75px}}
+@media(max-width:680px){
+ #page-catalog .toolbar{padding:10px}
+ #page-catalog .place-visual{height:180px}
+ #page-favorites .fav-row{grid-template-columns:65px 1fr;padding:12px}
+ #page-favorites .fav-icon{height:68px;width:65px;min-width:65px}
+ #page-favorites .fav-row h3{font-size:20px}
+ #page-routes .day-panel{padding:14px}
+ #detailModal .drawer-cover{height:185px}
+}
