@@ -30,6 +30,11 @@ for(const asset of ['site-hero-main.webp','site-heart.webp','site-star.webp','si
 }
 assert(editorialCSS.includes('site-hero-main.webp'),'Hero artwork has responsive styling');
 
+assert(html.includes('id="homeRealMap"'),'Homepage contains real interactive map');
+assert(!html.includes('ed-map-image"><svg'),'Fake map illustration removed');
+assert(html.includes('data-home-map-cat="food"'),'Homepage has category map filters');
+assert(code.includes("L.map('homeRealMap'"),'Homepage Leaflet map initializes');
+assert(code.includes('function mapPin'),'Categorized map markers implemented');
 assert(html.includes('class="editorial-hero"'),'Redesigned hero exists');
 assert(editorialCSS.includes('data-theme="dark"'),'Dark theme has custom material tokens');
 assert(editorialCSS.includes('@media(max-width:680px)'),'Mobile breakpoint exists');
