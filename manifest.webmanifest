@@ -1,0 +1,20 @@
+{
+  "id": "/piter-vdvoem/",
+  "name": "Питер вдвоём — места и маршруты",
+  "short_name": "Питер вдвоём",
+  "description": "Личный путеводитель: места, избранное, карты и маршруты.",
+  "start_url": "/piter-vdvoem/",
+  "scope": "/piter-vdvoem/",
+  "display": "standalone",
+  "background_color": "#f5f0e8",
+  "theme_color": "#d62828",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "./icons/app.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
