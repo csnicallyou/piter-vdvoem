@@ -306,7 +306,7 @@
    const d=button.dataset;
    if(d.homeMapCat){
      homeMapCategory=d.homeMapCat;
-     $('[data-home-map-cat]').forEach(el=>{const active=el.dataset.homeMapCat===homeMapCategory;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
+     document.querySelectorAll('[data-home-map-cat]').forEach(el=>{const active=el.dataset.homeMapCat===homeMapCategory;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
      renderHomeMap();
      return;
    }
