@@ -100,4 +100,14 @@ assert.match(node('#mapCount').textContent,/0 из 123/,'Map search filters pins
 node('#resetMap').listeners.click();
 assert.match(node('#mapCount').textContent,/123 из 123/,'Map reset restores pins');
 assert.match(node('#homeMapCount').textContent,/123/,'Home map count shown');
+assert(html.includes('data-collection="night"'),'Night collection is wired');
+assert(html.includes('data-collection="architecture"'),'Architecture collection is wired');
+assert(html.includes('data-collection="water"'),'Water collection is wired');
+click({collection:'night'});
+assert.match(node('#catalogGrid').innerHTML,/place-card/,'Curated night results render');
+assert.match(node('#catalogTitle').textContent,/Бары/,'Night collection title shown');
+click({nav:'catalog'});
+assert.equal(node('#catalogTitle').textContent,'Найди своё место','All places resets curated collection');
+click({routePreview:'2'});
+assert.match(node('#routeHead').innerHTML,/Васильевский/,'Route preview selects correct day');
 console.log('PASS: '+db.places.length+' places, '+db.routes.length+' itineraries, 123 map pins; home/catalog/saved/routes/map initialize.');
