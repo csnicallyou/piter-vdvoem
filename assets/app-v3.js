@@ -68,7 +68,7 @@
   const counts=Object.fromEntries(categories.map(c=>[c,places.filter(p=>p.category===c).length]));
   const editorialNames={'Поесть — рестораны':'Еда','Кофе, десерты и перекус':'Кофе','Бары и напитки':'Бары','Игры и активные развлечения':'Игры','Заброшки, форты и руины':'Необычное','Музеи и планетарии':'Культура','Прогулки и природа':'Прогулки'};
   const spotlight=categories.map((c,i)=>({c,i})).filter(({c})=>c in editorialNames).slice(0,6);
-  $('#categories').innerHTML=spotlight.map(({c,i})=>'<button class="category-tile" data-category="'+i+'"><span class="category-icon">'+ico(c)+'</span><div><strong>'+esc(editorialNames[c])+'</strong><br><small>'+counts[c]+' мест</small></div></button>').join('');
+  $('#categories').innerHTML=spotlight.map(({c,i})=>'<button class="category-tile" data-category="'+i+'" style="--category-background:url(&quot;'+categoryArt(c)+'&quot;)"><span class="category-icon">'+ico(c)+'</span><div><strong>'+esc(editorialNames[c])+'</strong><br><small>'+counts[c]+' мест</small></div></button>').join('');
   $('#homeSaved').textContent=saved.length+' мест в избранном';
   $('#homeRoutes').textContent=routes.length+' дней';
  }
@@ -166,7 +166,7 @@
   const r=routes[dayIndex],stops=routeStops(r),ps=stops.map(s=>byId.get(String(s.id))).filter(Boolean);
   $('#routeHead').innerHTML='<h3>'+esc(r.title)+'</h3><p class="plan-sub">'+esc(r.subtitle||'')+'</p>';
   $('#routeMetrics').innerHTML='<span>⌖ '+stops.length+' остановок</span><span>◈ '+(ps.some(hasPrice)?money(knownCost(ps)):'Цена не указана')+' / двое</span>';
-  $('#stops').innerHTML=stops.map((s,i)=>'<div class="stop"><span class="time">'+esc(s.time||'—')+'</span><div class="stop-description"><h3>'+esc(s.name)+'</h3><small>'+esc(s.note||'')+'</small></div><div class="stop-actions"><button title="Выше" data-reorder="'+s.id+'" data-direction="-1" '+(i===0?'disabled':'')+'>↑</button><button title="Ниже" data-reorder="'+s.id+'" data-direction="1" '+(i===stops.length-1?'disabled':'')+'>↓</button>'+(s.from==='custom'?'<button title="Удалить из дня" data-unassign="'+s.id+'">×</button>':'')+'</div></div>').join('');
+  $('#stops').innerHTML=stops.map((s,i)=>'<div class="stop"><span class="time">'+esc(s.time||'—')+'</span><span class="stop-image">'+(byId.get(String(s.id))?categoryVisual(byId.get(String(s.id))):'')+'</span><div class="stop-description"><h3>'+esc(s.name)+'</h3><small>'+esc(s.note||'')+'</small></div><div class="stop-actions"><button title="Выше" data-reorder="'+s.id+'" data-direction="-1" '+(i===0?'disabled':'')+'>↑</button><button title="Ниже" data-reorder="'+s.id+'" data-direction="1" '+(i===stops.length-1?'disabled':'')+'>↓</button>'+(s.from==='custom'?'<button title="Удалить из дня" data-unassign="'+s.id+'">×</button>':'')+'</div></div>').join('');
   updateRouteMap(stops);
   const pts=ps.filter(p=>p.lat!=null&&p.lon!=null);
   const url=pts.length>1?'https://www.google.com/maps/dir/?api=1&origin='+pts[0].lat+','+pts[0].lon+'&destination='+pts.at(-1).lat+','+pts.at(-1).lon+'&waypoints='+encodeURIComponent(pts.slice(1,-1).map(p=>p.lat+','+p.lon).join('|'))+'&travelmode=walking':'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.title+' Санкт-Петербург');
@@ -208,7 +208,7 @@
   const pts=mapFiltered();
   $('#mapCount').textContent=pts.length+' из '+geo.length+' точек';
   $('#mapMissing').textContent=(places.length-geo.length)+' мест без подтверждённых координат';
-  $('#mapList').innerHTML=pts.map(p=>'<button class="map-list-item" data-focus="'+p.id+'"><span class="ico">'+ico(p)+'</span><span><b>'+esc(p.name)+'</b><small>'+esc(p.category)+'</small></span></button>').join('')||'<div class="empty">Точек не найдено</div>';
+  $('#mapList').innerHTML=pts.map(p=>'<button class="map-list-item" data-focus="'+p.id+'"><span class="map-item-image">'+categoryVisual(p)+'</span><span><b>'+esc(p.name)+'</b><small>'+esc(p.category)+'</small></span></button>').join('')||'<div class="empty">Точек не найдено</div>';
   if(!mapInitialized)return;
   mapLayer.clearLayers();
   const bounds=[];
