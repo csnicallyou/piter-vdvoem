@@ -35,7 +35,7 @@
  const hasPrice=p=>p.price_two!==null&&p.price_two!==undefined;
  const knownCost=items=>items.filter(hasPrice).reduce((s,p)=>s+Number(p.price_two),0);
  const routeDate=r=>new Date(r.day+'T12:00:00').toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
- const searchUrl=p=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((p.verified_address||p.name+' '+(p.area||'Санкт-Петербург')));
+ const searchUrl=p=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.lat!=null&&p.lon!=null?p.lat+','+p.lon:(p.verified_address||p.name+' '+(p.area||'Санкт-Петербург')));
  const placeWhere=p=>p.verified_address||((p.area||'').includes('уточнить')?'Расположение уточняется':p.area)||'Расположение уточняется';
  const catId=i=>'cat-'+i;
  function notify(message){const e=$('#toast');e.textContent=message;e.classList.add('visible');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>e.classList.remove('visible'),2600)}
@@ -124,11 +124,12 @@
   if(page==='catalog')renderCatalog();
   if(page==='favorites')renderFavorites();
   if(page==='map')renderMap(false);
+  if(selectedPlace===id)$('#detailStatus').value=getStatus(id);
   notify(states[id]==='other'?'Место убрано из списка':'Отметка сохранена');
  }
  function changeDay(id,date){
   if(date)plans[String(id)]=date;else delete plans[String(id)];
-  save();renderFavorites();notify(date?'Добавлено в план '+date.slice(8)+'.11':'Убрано из плана');
+  save();renderFavorites();if(page==='routes')renderRoutes();notify(date?'Добавлено в план '+date.slice(8)+'.11':'Убрано из плана');
  }
  function dayOptions(id){
   return '<option value="">Без даты</option>'+routes.map(r=>'<option value="'+r.day+'" '+(plans[String(id)]===r.day?'selected':'')+'>'+routeDate(r)+' · '+esc(r.title)+'</option>').join('');
@@ -264,7 +265,7 @@
    if(d.nav){navigate(d.nav);return}
    if(d.category!==undefined){cat=categories[Number(d.category)];catalogPage=0;navigate('catalog');return}
    if(d['pickCategory']!==undefined){cat=d.pickCategory===''?'':categories[Number(d.pickCategory)];catalogPage=0;renderCatalog();return}
-   if(d.fav){setStatus(d.fav,'wish');return}
+   if(d.fav){setStatus(d.fav,getStatus(d.fav)==='must'?'must':'wish');return}
    if(d.detail){showDetail(d.detail);return}
    if(d['mapDetail']){showDetail(d.mapDetail);return}
    if(d['mapSave']){setStatus(d.mapSave,'wish');return}
@@ -286,6 +287,29 @@
   $('#mapOnly').addEventListener('change',e=>{mapOnly=e.target.value;renderMap()});
   $('#detailStatus').addEventListener('change',e=>{if(selectedPlace){setStatus(selectedPlace,e.target.value);$('#detailStatus').value=getStatus(selectedPlace)}});
   $('#detailDay').addEventListener('change',e=>{if(selectedPlace){changeDay(selectedPlace,e.target.value)}});
+  $('#detailOnMap').addEventListener('click',()=>{
+    if(!selectedPlace)return;
+    const p=byId.get(selectedPlace);
+    if(!p||p.lat==null||p.lon==null){notify('Координаты этого места ещё уточняются');return}
+    mapCat='';mapOnly='all';mapSearch='';mapFocus=selectedPlace;
+    closeDetail();navigate('map');
+  });
+  $('#resetCatalog').addEventListener('click',()=>{
+    cat='';search='';status='';price='';sort='name';catalogPage=0;renderCatalog();
+  });
+  $('#resetMap').addEventListener('click',()=>{
+    mapCat='';mapSearch='';mapOnly='all';mapFocus=null;renderMap(true);
+  });
+  $('#copyRoute').addEventListener('click',async()=>{
+    const route=routes[dayIndex];if(!route)return;
+    const stops=routeStops(route);
+    const text='Питер вдвоём · '+routeDate(route)+' · '+route.title+'\n\n'+stops.map((s,i)=>(i+1)+'. '+(s.time||'—')+' — '+s.name+(s.note?' · '+s.note:'')).join('\n')+'\n\nПлан предварительный: проверьте часы работы и транспорт.';
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(text)}
+      else{const el=document.createElement('textarea');el.value=text;document.body.appendChild(el);el.select();if(!document.execCommand('copy'))throw Error('copy failed');el.remove()}
+      notify('Маршрут скопирован');
+    }catch(e){notify('Не удалось скопировать — проверьте доступ к буферу обмена')}
+  });
   $('#closeDetail').onclick=closeDetail;
   $('#detailModal').addEventListener('click',e=>{if(e.target.id==='detailModal')closeDetail()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
