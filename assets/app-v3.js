@@ -57,7 +57,9 @@
    [places.length,'Мест в каталоге'],[geo.length,'На карте'],[saved.length,'Сохранили'],[done.length,'Посетили']
   ].map(x=>'<div class="metric glass"><strong>'+x[0]+'</strong><span>'+x[1]+'</span></div>').join('');
   const counts=Object.fromEntries(categories.map(c=>[c,places.filter(p=>p.category===c).length]));
-  $('#categories').innerHTML=categories.map((c,i)=>'<button class="category-tile" data-category="'+i+'"><span class="category-icon">'+ico(c)+'</span><div><strong>'+esc(c)+'</strong><br><small>'+counts[c]+' мест</small></div></button>').join('');
+  const editorialNames={'Поесть — рестораны':'Еда','Кофе, десерты и перекус':'Кофе','Бары и напитки':'Бары','Игры и активные развлечения':'Игры','Заброшки, форты и руины':'Необычное','Музеи и планетарии':'Культура','Прогулки и природа':'Прогулки'};
+  const spotlight=categories.map((c,i)=>({c,i})).filter(({c})=>c in editorialNames).slice(0,6);
+  $('#categories').innerHTML=spotlight.map(({c,i})=>'<button class="category-tile" data-category="'+i+'"><span class="category-icon">'+ico(c)+'</span><div><strong>'+esc(editorialNames[c])+'</strong><br><small>'+counts[c]+' мест</small></div></button>').join('');
   $('#homeSaved').textContent=saved.length+' мест в избранном';
   $('#homeRoutes').textContent=routes.length+' дней';
  }
