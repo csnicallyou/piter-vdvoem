@@ -18,6 +18,10 @@ for(const page of ['home','catalog','map','favorites','routes'])assert(html.incl
 assert(html.includes('assets/app-v3.css'),'Style is linked');
 assert(html.includes('assets/app-v3.js'),'App is linked');
 assert(html.includes('assets/editorial-v4.css'),'Editorial style is linked');
+assert(html.includes('assets/editorial-inner-v1.css'),'Interior redesign linked');
+assert(fs.readFileSync('assets/editorial-inner-v1.css','utf8').includes('.category-art'),'Artwork styling exists');
+assert(code.includes('categoryVisual(p)'),'Artwork used in venue cards');
+assert(code.includes("'#detailVisual').innerHTML=categoryVisual(p)"),'Drawer uses artwork');
 assert(html.includes('assets/editorial-v4.js'),'Theme controller is linked');
 assert(html.includes('id="themeSwitch"'),'Theme switch exists');
 for(const asset of ['site-hero-main.webp','site-heart.webp','site-star.webp','site-lily.webp','site-architecture.webp','site-water.webp']){
