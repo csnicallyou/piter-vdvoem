@@ -38,7 +38,7 @@ new vm.Script(themeCode,{filename:'editorial-v4.js'});
 const elements=new Map();
 function node(key){
  if(!elements.has(key)){
-  const el={value:'',innerHTML:'',textContent:'',style:{},dataset:{},classList:{toggle(){},add(){},remove(){}},addEventListener(){},setAttribute(){},focus(){}};
+  const el={value:'',innerHTML:'',textContent:'',style:{},dataset:{},classList:{toggle(){},add(){},remove(){}},addEventListener(type,handler){this.listeners??={};this.listeners[type]=handler},setAttribute(){},focus(){}};
   elements.set(key,el);
  }
  return elements.get(key);
@@ -76,6 +76,11 @@ function click(dataset){
 click({nav:'catalog'});
 assert.match(node('#catalogGrid').innerHTML,/place-card/,'Catalog cards render');
 assert.match(node('#catalogGrid').innerHTML,/category-art/,'Catalog renders artwork');
+assert(html.includes('id="resetCatalog"'),'Catalog reset exists');
+node('#catalogSearch').listeners.input({target:{value:'nonexistent-unique-term-00000'}});
+assert.match(node('#catalogGrid').innerHTML,/Ничего не найдено/,'Search filters catalog');
+node('#resetCatalog').listeners.click();
+assert.match(node('#catalogGrid').innerHTML,/place-card/,'Catalog reset restores results');
 click({fav:'1'});
 assert.equal(JSON.parse(store.get('spb-liza-anton-v2-avant'))['1'],'wish','Favorites persist');
 click({nav:'favorites'});
@@ -87,5 +92,12 @@ assert.match(node('#stops').innerHTML,/stop-image/,'Route stops have visual prev
 click({nav:'map'});
 assert.match(node('#mapCount').textContent,/123/,'Map filter count shown');
 assert.match(node('#mapList').innerHTML,/map-item-image/,'Map results render thumbnails');
+assert(html.includes('id="resetMap"'),'Map reset exists');
+assert(html.includes('id="detailOnMap"'),'Internal map navigation exists');
+assert(html.includes('id="copyRoute"'),'Copy route control exists');
+node('#mapSearch').listeners.input({target:{value:'nonexistent-unique-term-00000'}});
+assert.match(node('#mapCount').textContent,/0 из 123/,'Map search filters pins');
+node('#resetMap').listeners.click();
+assert.match(node('#mapCount').textContent,/123 из 123/,'Map reset restores pins');
 assert.match(node('#homeMapCount').textContent,/123/,'Home map count shown');
 console.log('PASS: '+db.places.length+' places, '+db.routes.length+' itineraries, 123 map pins; home/catalog/saved/routes/map initialize.');
