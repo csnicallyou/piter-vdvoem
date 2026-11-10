@@ -186,3 +186,16 @@ html[data-theme="dark"] .city-pin.is-saved{background:linear-gradient(145deg,#a8
  #page-map .map-sidebar{padding:13px}
  #page-map .map-list{max-height:300px}
 }
+
+/* Quick discovery controls floating over real map */
+.home-map-filters{position:absolute;bottom:13px;left:12px;right:55px;z-index:550;display:flex;gap:5px;flex-wrap:wrap;pointer-events:none}
+.home-map-filters button{pointer-events:auto;border:1px solid #fff;background:#faf8f3e8;backdrop-filter:blur(13px);border-radius:999px;color:#454148;padding:8px 10px;font:650 10px/1 Inter,system-ui;box-shadow:0 3px 14px #1d1c2424;cursor:pointer}
+.home-map-filters button.active{background:#29272d;color:#fff}
+.home-map-filters button:focus-visible{outline:3px solid #a894a1;outline-offset:2px}
+html[data-theme="dark"] .home-map-filters button{background:#342e38e8;border-color:#ffffff38;color:#f5edf3}
+html[data-theme="dark"] .home-map-filters button.active{background:#dbbdcc;color:#17161c}
+@media(max-width:680px){
+ .home-map-filters{bottom:9px;left:7px;right:50px;gap:4px}
+ .home-map-filters button{font-size:9px;padding:7px 8px}
+ .home-map-label{font-size:8px}
+}
