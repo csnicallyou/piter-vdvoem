@@ -561,8 +561,8 @@ function renderSaved(){
     const label={wish:'♡ Хочу',must:'★ Обязательно',done:'✓ Посетили'}[st];
     return '<article class="saved-place"><div class="saved-cat">'+safe(iconFor(p.category)+' '+p.category)+'</div><h3>'+safe(p.name)+'</h3><div class="area">'+safe(p.verified_address||p.area||'Адрес уточняется')+'</div><div class="saved-price">'+(p.price_two===null||p.price_two===undefined?'Стоимость не уточнена':money(p.price_two)+' за двоих')+'</div><div><span class="saved-badge '+safe(st)+'">'+label+'</span></div><label class="saved-day-label">Добавить в маршрут<select class="saved-day-select" data-plan-id="'+p.id+'">'+planOptions(p.id)+'</select></label><div class="saved-actions"><button class="action" data-saved-id="'+p.id+'" data-saved-state="'+(st==='done'?'wish':'done')+'">'+(st==='done'?'↶ Вернуть':'✓ Посетили')+'</button><button class="action" data-saved-id="'+p.id+'" data-saved-state="other">Убрать</button><a class="action link" href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">↗ Карта</a></div></article>';
   }).join(''):'<div class="empty">Здесь пока пусто. Отметь интересные места в каталоге кнопкой ♡ «Хочу» или ★ «Точно».</div>';
-  $('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
-  $('[data-plan-id]').forEach(el=>el.onchange=()=>assignToDay(el.dataset.planId,el.value));
+  $$('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
+  $$('[data-plan-id]').forEach(el=>el.onchange=()=>assignToDay(el.dataset.planId,el.value));
   $$('[data-saved-filter]').forEach(b=>b.classList.toggle('active',b.dataset.savedFilter===savedFilter));
 }
 $$('[data-saved-filter]').forEach(b=>b.onclick=()=>{savedFilter=b.dataset.savedFilter;renderSaved()});
