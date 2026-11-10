@@ -253,7 +253,8 @@ const db = JSON.parse(document.getElementById('db').textContent);
 const places = db.places || [];
 const routes = db.routes || [];
 const byId = new Map(places.map(p => [p.id, p]));
-const storageKey = 'spb-liza-anton-v2-avant';\nconst legacyStorageKey = 'spb-liza-anton-v1';
+const storageKey = 'spb-liza-anton-v2-avant';
+const legacyStorageKey = 'spb-liza-anton-v1';
 const pageSize = 24;
 let state = {};
 try { state = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem(legacyStorageKey) || '{}'); } catch (e) { state = {}; }
