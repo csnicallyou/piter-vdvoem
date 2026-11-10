@@ -14,6 +14,15 @@
  const categories=[...new Set(places.map(p=>p.category))];
  const icons={'Поесть — рестораны':'🍴','Кофе, десерты и перекус':'☕','Бары и напитки':'🍸','Игры и активные развлечения':'🎱','Кино, кабаре и клубы':'🎭','Заброшки, форты и руины':'🏚️','Музеи и планетарии':'🏛️','Галереи и арт-пространства':'🖼️','Дворцы, особняки и архитектура':'🏰','Прогулки и природа':'🌿','Храмы и кладбища':'⛪','Магазины и необычные места':'🛍️'};
  const ico=p=>icons[typeof p==='string'?p:p.category]||'📍';
+ const artForCategory=c=>{
+  if(/ресторан|кофе|десерт|перекус|бар|напитк/i.test(c))return 'site-water.webp';
+  if(/музе|галере|арт|дворц|архитект|храм|кладбищ/i.test(c))return 'site-architecture.webp';
+  if(/прогул|природ|отдых/i.test(c))return 'site-water.webp';
+  return 'site-hero-main.webp';
+ };
+ const categoryArt=p=>'./assets/art/'+artForCategory(typeof p==='string'?p:p.category);
+ const categoryVisual=p=>'<img class="category-art" src="'+categoryArt(p)+'" alt="" loading="lazy" decoding="async"><span class="category-symbol" aria-hidden="true">'+ico(p)+'</span>';
+ 
  const geo=places.filter(p=>p.lat!=null&&p.lon!=null&&Number.isFinite(Number(p.lat))&&Number.isFinite(Number(p.lon)));
  const load=(k,fallback)=>{try{const v=JSON.parse(localStorage.getItem(k)||'null');return v&&typeof v==='object'?v:fallback}catch(e){return fallback}};
  let states=load(STORAGE,{}),plans=load(PLAN,{}),orders=load(ORDER,{});
@@ -89,7 +98,7 @@
  function placeCard(p){
   const st=getStatus(p.id),tag=st==='other'?'':statusLabel(st);
   return '<article class="place-card glass">'+
-   '<div class="place-visual"><span class="em">'+ico(p)+'</span>'+(tag?'<span class="place-status">'+tag+'</span>':'')+
+   '<div class="place-visual">'+categoryVisual(p)+(tag?'<span class="place-status">'+tag+'</span>':'')+
    '<button class="heart '+(st==='wish'||st==='must'?'selected':'')+'" data-fav="'+p.id+'" aria-label="Добавить в избранное">'+(st==='wish'||st==='must'?'♥':'♡')+'</button></div>'+
    '<div class="type">'+esc(p.category)+'</div>'+
    '<h3>'+esc(p.name)+'</h3>'+
@@ -131,7 +140,7 @@
   $('#favBudget').textContent=(will.length+must.length)?money(knownCost(will.concat(must)))+' + неизвестные цены':'—';
   $('#favFilter').value=showOnly;
   const list=chosen.filter(p=>showOnly==='all'||getStatus(p.id)===showOnly).sort((a,b)=>(getStatus(a.id)==='must'?-1:1)-(getStatus(b.id)==='must'?-1:1));
-  $('#favList').innerHTML=list.map(p=>'<article class="fav-row glass"><span class="fav-icon">'+ico(p)+'</span><div><h3>'+esc(p.name)+'</h3><small>'+esc(p.category)+' · '+statusLabel(getStatus(p.id))+(hasPrice(p)?' · '+money(p.price_two):'')+'</small></div><div class="fav-actions"><select aria-label="Выбрать день" data-day-assign="'+p.id+'">'+dayOptions(p.id)+'</select><button class="btn small" data-detail="'+p.id+'">↗</button><button class="btn small" data-remove="'+p.id+'" aria-label="Убрать из избранного">×</button></div></article>').join('')||'<div class="empty"><strong>Здесь пока пусто</strong>Добавь места в каталоге — они появятся здесь.</div>';
+  $('#favList').innerHTML=list.map(p=>'<article class="fav-row glass"><span class="fav-icon">'+categoryVisual(p)+'</span><div><h3>'+esc(p.name)+'</h3><small>'+esc(p.category)+' · '+statusLabel(getStatus(p.id))+(hasPrice(p)?' · '+money(p.price_two):'')+'</small></div><div class="fav-actions"><select aria-label="Выбрать день" data-day-assign="'+p.id+'">'+dayOptions(p.id)+'</select><button class="btn small" data-detail="'+p.id+'">↗</button><button class="btn small" data-remove="'+p.id+'" aria-label="Убрать из избранного">×</button></div></article>').join('')||'<div class="empty"><strong>Здесь пока пусто</strong>Добавь места в каталоге — они появятся здесь.</div>';
  }
  function routeStops(r){
   const m=new Map();
@@ -157,7 +166,7 @@
   const r=routes[dayIndex],stops=routeStops(r),ps=stops.map(s=>byId.get(String(s.id))).filter(Boolean);
   $('#routeHead').innerHTML='<h3>'+esc(r.title)+'</h3><p class="plan-sub">'+esc(r.subtitle||'')+'</p>';
   $('#routeMetrics').innerHTML='<span>⌖ '+stops.length+' остановок</span><span>◈ '+(ps.some(hasPrice)?money(knownCost(ps)):'Цена не указана')+' / двое</span>';
-  $('#stops').innerHTML=stops.map((s,i)=>'<div class="stop"><span class="time">'+esc(s.time||'—')+'</span><div><h3>'+esc(s.name)+'</h3><small>'+esc(s.note||'')+'</small></div><div class="stop-actions"><button title="Выше" data-reorder="'+s.id+'" data-direction="-1" '+(i===0?'disabled':'')+'>↑</button><button title="Ниже" data-reorder="'+s.id+'" data-direction="1" '+(i===stops.length-1?'disabled':'')+'>↓</button>'+(s.from==='custom'?'<button title="Удалить из дня" data-unassign="'+s.id+'">×</button>':'')+'</div></div>').join('');
+  $('#stops').innerHTML=stops.map((s,i)=>'<div class="stop"><span class="time">'+esc(s.time||'—')+'</span><div class="stop-description"><h3>'+esc(s.name)+'</h3><small>'+esc(s.note||'')+'</small></div><div class="stop-actions"><button title="Выше" data-reorder="'+s.id+'" data-direction="-1" '+(i===0?'disabled':'')+'>↑</button><button title="Ниже" data-reorder="'+s.id+'" data-direction="1" '+(i===stops.length-1?'disabled':'')+'>↓</button>'+(s.from==='custom'?'<button title="Удалить из дня" data-unassign="'+s.id+'">×</button>':'')+'</div></div>').join('');
   updateRouteMap(stops);
   const pts=ps.filter(p=>p.lat!=null&&p.lon!=null);
   const url=pts.length>1?'https://www.google.com/maps/dir/?api=1&origin='+pts[0].lat+','+pts[0].lon+'&destination='+pts.at(-1).lat+','+pts.at(-1).lon+'&waypoints='+encodeURIComponent(pts.slice(1,-1).map(p=>p.lat+','+p.lon).join('|'))+'&travelmode=walking':'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.title+' Санкт-Петербург');
@@ -218,7 +227,7 @@
  function showDetail(id){
   const p=byId.get(String(id));if(!p)return;
   selectedPlace=String(id);
-  $('#detailVisual').textContent=ico(p);
+  $('#detailVisual').innerHTML=categoryVisual(p);
   $('#detailCategory').textContent=p.category;
   $('#detailTitle').textContent=p.name;
   $('#detailDescription').textContent=p.note||'Описание и информация о посещении пока уточняются.';
