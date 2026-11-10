@@ -35,6 +35,11 @@ assert(!html.includes('ed-map-image"><svg'),'Fake map illustration removed');
 assert(html.includes('data-home-map-cat="food"'),'Homepage has category map filters');
 assert(code.includes("L.map('homeRealMap'"),'Homepage Leaflet map initializes');
 assert(code.includes('function mapPin'),'Categorized map markers implemented');
+assert(html.includes('class="ed-discovery-grid"'),'Editorial discovery bento exists');
+assert(html.includes('class="ed-featured-story"'),'Featured story exists');
+assert(html.includes('id="homeSearchForm"'),'Home search form exists');
+assert(html.includes('assets/atelier-v1.css'),'Atelier stylesheet linked');
+assert(fs.readFileSync('assets/atelier-v1.css','utf8').includes('@media(max-width:680px)'),'Atelier responsive rules exist');
 assert(html.includes('class="editorial-hero"'),'Redesigned hero exists');
 assert(editorialCSS.includes('data-theme="dark"'),'Dark theme has custom material tokens');
 assert(editorialCSS.includes('@media(max-width:680px)'),'Mobile breakpoint exists');
@@ -75,9 +80,13 @@ assert.equal(document.documentElement['data-theme'],'light','Light theme is init
 assert.equal(node('#topCount').textContent,'305 мест','App booted');
 assert.match(node('#metrics').innerHTML,/305/,'Home metrics rendered');
 assert.match(node('#categories').innerHTML,/category-tile/,'Home categories rendered');
+assert.match(node('#categories').innerHTML,/site-heart.webp/,'Home categories use generated art assets');
 function click(dataset){
  docEvents.click({target:{closest(){return {dataset}}}});
 }
+node('#homeSearch').value='Monterey';
+node('#homeSearchForm').listeners.submit({preventDefault(){}});
+assert.match(node('#catalogGrid').innerHTML,/Monterey/,'Home search opens matching catalog results');
 click({nav:'catalog'});
 assert.match(node('#catalogGrid').innerHTML,/place-card/,'Catalog cards render');
 assert.match(node('#catalogGrid').innerHTML,/category-art/,'Catalog renders artwork');
