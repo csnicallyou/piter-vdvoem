@@ -76,3 +76,14 @@ html[data-theme="dark"] #page-catalog .chip.active,html[data-theme="dark"] #page
  #page-routes .day-panel{padding:14px}
  #detailModal .drawer-cover{height:185px}
 }
+
+/* Corrections for legacy grid and pseudo-element overlaps */
+#page-catalog .place-visual{display:block}
+#page-catalog .place-visual::before{display:none}
+#page-catalog .place-visual::after{left:0;top:30%;right:0;bottom:0;width:auto;height:auto;border:0;border-radius:0;transform:none;background:linear-gradient(0deg,#27212a88,transparent)}
+#page-favorites .fav-row{grid-template-columns:100px minmax(0,1fr) auto}
+#page-routes .stop{background:var(--glass);border:1px solid var(--stroke);border-radius:18px;padding:13px;margin-bottom:8px}
+#detailModal .drawer-cover{display:block;padding:0;font-size:initial}
+html[data-theme="dark"] #page-routes .stop{background:var(--glass)}
+@media(max-width:900px){#page-favorites .fav-row{grid-template-columns:75px minmax(0,1fr) auto}}
+@media(max-width:680px){#page-favorites .fav-row{grid-template-columns:65px minmax(0,1fr)}}
