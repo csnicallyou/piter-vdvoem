@@ -164,6 +164,71 @@ button{cursor:pointer}
 @media(max-width:1000px){.discovery-layout{grid-template-columns:1fr}.map-column{position:static;order:-1}.discovery-sidebar{grid-template-columns:1fr 1fr}.discovery-sidebar>.unmapped{grid-column:1/-1}}
 @media(max-width:620px){.discovery-head{padding:17px;border-radius:20px;align-items:flex-start}.discovery-number{min-width:100px;padding:10px}.discovery-number strong{font-size:28px}.discovery-number span{font-size:9px}.discovery-head h2{font-size:40px}.discovery-sidebar{grid-template-columns:1fr}.discovery-sidebar>.unmapped{grid-column:auto}#allPlacesMap{height:52vh;min-height:330px}.map-corner-note{bottom:20px;left:20px}.tabs{overflow-x:auto;flex-wrap:nowrap}.tab{white-space:nowrap;font-size:12px;flex-shrink:0}}
 
+
+/* Edition 2: mobile-first product details */
+:root{--shadow:0 8px 22px rgba(17,17,17,.045)}
+button,.action,.chip,.tab,.map-place{transition:transform .16s ease,background-color .16s ease,border-color .16s ease}
+button:active,.action:active{transform:scale(.97)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b31c1c;outline-offset:3px}
+.card{border-width:1.5px;box-shadow:var(--shadow);min-height:200px}
+.card:before{opacity:.45}
+.card .cat{text-transform:none;letter-spacing:0;font-weight:750}
+.card h3{font-size:clamp(20px,2.3vw,24px);max-width:24ch}
+.card .id{opacity:.6}
+.card .actions .action{padding:9px 12px}
+.card .pricebox strong{font-size:20px}
+.hero .lead{max-width:58ch}
+.saved-hero{border:2px solid var(--ink);background:var(--paper);border-radius:28px;display:grid;grid-template-columns:1fr 210px;align-items:center;gap:16px;padding:22px 26px;overflow:hidden;position:relative}
+.saved-hero h2{font-size:clamp(44px,7vw,88px);line-height:.9;letter-spacing:-.08em;text-transform:uppercase;margin:16px 0 12px}
+.saved-hero h2 em{color:var(--accent);font-style:normal}
+.saved-hero p{font-size:14px;line-height:1.6;max-width:62ch;color:var(--muted);margin:0}
+.saved-hero-art{position:relative;display:grid;place-items:center;min-height:180px;isolation:isolate}
+.saved-art-circle{background:var(--accent);width:150px;height:150px;border-radius:50%;position:absolute;transform:translate(-8px,0);z-index:-1}
+.saved-hero-art span{font-size:145px;line-height:1;transform:rotate(-14deg);color:var(--paper);font-weight:300}
+.saved-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.saved-summary>div{background:var(--paper);border:1.5px solid var(--ink);padding:16px;border-radius:22px}
+.saved-summary strong{display:block;font-size:clamp(24px,3vw,34px);letter-spacing:-.05em;overflow-wrap:anywhere}
+.saved-summary span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:750;margin-top:7px}
+.saved-controls{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center;margin:15px 0}
+.saved-segments{display:flex;flex-wrap:wrap;gap:8px}
+.saved-segment{border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:10px 15px;font-size:12px;font-weight:800}
+.saved-segment.active{background:var(--ink);color:#fff}
+.saved-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.saved-place{display:flex;flex-direction:column;background:var(--paper);border:1.5px solid var(--ink);border-radius:24px;padding:16px;gap:13px}
+.saved-place .saved-cat{font-size:12px;color:var(--accent);font-weight:800}
+.saved-place h3{margin:0;font-size:21px;line-height:1.1;letter-spacing:-.045em}
+.saved-place .saved-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
+.saved-place .saved-actions .action{padding:9px 12px}
+.saved-price{font-size:13px;color:var(--muted)}
+.saved-badge{padding:6px 10px;border-radius:99px;background:var(--paper-2);font-size:11px;font-weight:800}
+.saved-badge.must{background:var(--accent-soft)}
+.saved-badge.done{background:var(--good-bg)}
+.mobile-nav{display:none}
+@media(max-width:1100px){.saved-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){
+ .saved-hero{grid-template-columns:1fr 85px;padding:16px;border-radius:20px}
+ .saved-hero-art{min-height:100px}.saved-art-circle{width:76px;height:76px}.saved-hero-art span{font-size:90px}
+ .saved-summary{grid-template-columns:repeat(2,1fr);gap:8px}
+ .saved-grid{grid-template-columns:1fr}
+ .saved-controls{flex-direction:column;align-items:stretch}.saved-segments{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px}
+ .saved-segment{white-space:nowrap;flex-shrink:0}
+ .mobile-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:fixed;bottom:0;left:0;right:0;z-index:1500;box-shadow:0 -7px 25px #0002;border-top:1px solid var(--line);background:rgba(255,253,249,.96);backdrop-filter:blur(18px);padding:7px 8px calc(7px + env(safe-area-inset-bottom))}
+ .mobile-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:46px;border:0;border-radius:14px;background:transparent;color:var(--muted)}
+ .mobile-nav-item span{font-size:23px;line-height:1}.mobile-nav-item small{font-size:10px;font-weight:800}
+ .mobile-nav-item.active{background:var(--accent);color:#fff}
+ .shell{padding-bottom:100px}
+ .tabs{display:none}
+ .hero{border-radius:20px}.hero h1{font-size:clamp(38px,10vw,54px)}
+ .note-card{display:none}
+ .hero .stamp{min-height:85px;padding:12px;transform:none}
+ .hero .stamp b{font-size:32px}
+ .hero .kicker{font-size:10px;letter-spacing:.08em}
+ .card-grid{grid-template-columns:1fr}
+ .block{border-width:1.5px}
+ .stats .stat{border-width:1.5px}
+ .discovery-number span{font-size:10px}
+}
+
 </style>
 </head>
 <body>
@@ -201,9 +266,33 @@ button{cursor:pointer}
 
   <nav class="tabs">
     <button class="tab active" data-tab="catalog">Все места</button>
+    <button class="tab" data-tab="saved">♡ Избранное <span id="savedTabCount">0</span></button>
     <button class="tab" data-tab="allmap">Карта всех мест</button>
     <button class="tab" data-tab="routes">Маршруты по дням</button>
   </nav>
+
+  <section id="saved" class="pane">
+    <div class="saved-hero">
+      <div><div class="kicker"><span>Личный список</span><span>Места на примете</span></div><h2>Наши <em>места.</em></h2><p>Все выбранные места в одном пространстве. Можно быстро найти их на карте, отметить посещёнными или убрать из списка.</p></div>
+      <div class="saved-hero-art" aria-hidden="true"><div class="saved-art-circle"></div><span>♡</span></div>
+    </div>
+    <div class="saved-summary">
+      <div><strong id="savedWishCount">0</strong><span>Хочу</span></div>
+      <div><strong id="savedMustCount">0</strong><span>Обязательно</span></div>
+      <div><strong id="savedDoneCount">0</strong><span>Посетили</span></div>
+      <div><strong id="savedTotalKnown">—</strong><span>Известные расходы на двоих</span></div>
+    </div>
+    <div class="saved-controls">
+      <div class="saved-segments" role="group" aria-label="Фильтр избранного">
+        <button class="saved-segment active" data-saved-filter="all">Все выбранные</button>
+        <button class="saved-segment" data-saved-filter="must">★ Обязательно</button>
+        <button class="saved-segment" data-saved-filter="wish">♡ Хочу</button>
+        <button class="saved-segment" data-saved-filter="done">✓ Посетили</button>
+      </div>
+      <button class="btn" id="savedToMap">На карту ↗</button>
+    </div>
+    <div id="savedCards" class="saved-grid"></div>
+  </section>
 
   <section id="catalog" class="pane active">
     <div class="layout">
@@ -268,7 +357,7 @@ button{cursor:pointer}
     <div class="discovery">
       <div class="discovery-head">
         <div><div class="kicker"><span>Исследуй город</span><span>Все категории</span></div><h2>Карта <em>мест</em></h2><p>Выбирай категорию, находи интересное рядом и добавляй места в свой список.</p></div>
-        <div class="discovery-number"><strong id="allMapCount">30</strong><span>точек с координатами</span></div>
+        <div class="discovery-number"><strong id="allMapCount">—</strong><span>точек с координатами</span></div>
       </div>
       <div class="discovery-layout">
         <aside class="discovery-sidebar">
@@ -287,7 +376,7 @@ button{cursor:pointer}
         </aside>
         <div class="map-column">
           <div class="allmap-frame"><div id="allPlacesMap"></div><div class="map-corner-note">📍 Метки по категориям · координаты проверяются</div></div>
-          <div class="note">На карту нанесены только объекты с координатами. Сейчас это 30 из 305: остальные ещё предстоит геокодировать и проверить. Метка на карте не гарантирует свободного входа в здание.</div>
+          <div class="note">На карту нанесены только объекты с координатами. Координаты уточняются, а количество доступных точек указано над картой. Метка на карте не гарантирует свободного входа в здание.</div>
         </div>
       </div>
     </div>
@@ -319,6 +408,12 @@ button{cursor:pointer}
     </div>
   </section>
 
+  <nav class="mobile-nav" aria-label="Навигация по приложению">
+    <button class="mobile-nav-item active" data-go="catalog"><span>▦</span><small>Места</small></button>
+    <button class="mobile-nav-item" data-go="saved"><span>♡</span><small>Моё</small></button>
+    <button class="mobile-nav-item" data-go="allmap"><span>⌖</span><small>Карта</small></button>
+    <button class="mobile-nav-item" data-go="routes"><span>↗</span><small>Маршруты</small></button>
+  </nav>
   <footer class="footer">Известный бюджет на двоих включает только места, где в каталоге была указана стоимость. Неизвестные цены не считаются бесплатными. Для карты нужен интернет. Координаты многих точек пока ориентировочные и будут ещё уточняться. Это красивый рабочий прототип, а не финальная логистика поездки.</footer>
 </main>
 
@@ -424,9 +519,48 @@ document.addEventListener('click',e=>{
  state[id]=state[id]===st?'other':st;persist();renderCards();renderExplorer();explorerMarkers.get(id)?.openPopup();
 });
 
+
+/* Saved places + accessible navigation */
+let savedFilter='all';
+function renderSaved(){
+  const filtered=places.filter(p=>['wish','must','done'].includes(state[p.id]));
+  const counts={wish:0,must:0,done:0};filtered.forEach(p=>counts[state[p.id]]++);
+  const known=filtered.filter(p=>state[p.id]!=='done'&&p.price_two!==null&&p.price_two!==undefined);
+  $('#savedWishCount').textContent=counts.wish;
+  $('#savedMustCount').textContent=counts.must;
+  $('#savedDoneCount').textContent=counts.done;
+  $('#savedTabCount').textContent=counts.wish+counts.must;
+  $('#savedTotalKnown').textContent=known.length?money(known.reduce((acc,p)=>acc+Number(p.price_two),0)):'—';
+  const list=filtered.filter(p=>savedFilter==='all'||state[p.id]===savedFilter);
+  list.sort((a,b)=>({must:0,wish:1,done:2}[state[a.id]]??4)-({must:0,wish:1,done:2}[state[b.id]]??4)||a.name.localeCompare(b.name,'ru'));
+  $('#savedCards').innerHTML=list.length?list.map(p=>{
+    const st=state[p.id];
+    const label={wish:'♡ Хочу',must:'★ Обязательно',done:'✓ Посетили'}[st];
+    return '<article class="saved-place"><div class="saved-cat">'+safe(iconFor(p.category)+' '+p.category)+'</div><h3>'+safe(p.name)+'</h3><div class="area">'+safe(p.verified_address||p.area||'Адрес уточняется')+'</div><div class="saved-price">'+(p.price_two===null||p.price_two===undefined?'Стоимость не уточнена':money(p.price_two)+' за двоих')+'</div><div><span class="saved-badge '+safe(st)+'">'+label+'</span></div><div class="saved-actions"><button class="action" data-saved-id="'+p.id+'" data-saved-state="'+(st==='done'?'wish':'done')+'">'+(st==='done'?'↶ Вернуть':'✓ Посетили')+'</button><button class="action" data-saved-id="'+p.id+'" data-saved-state="other">Убрать</button><a class="action link" href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">↗ Карта</a></div></article>';
+  }).join(''):'<div class="empty">Здесь пока пусто. Отметь интересные места в каталоге кнопкой ♡ «Хочу» или ★ «Точно».</div>';
+  $('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
+  $('[data-saved-filter]').forEach(b=>b.classList.toggle('active',b.dataset.savedFilter===savedFilter));
+}
+$('[data-saved-filter]').forEach(b=>b.onclick=()=>{savedFilter=b.dataset.savedFilter;renderSaved()});
+$('#savedToMap').onclick=()=>{openPane('allmap');if(explorerMap){mapFavoritesOnly=true;$('#mapOnlyChosen').classList.add('primary');renderExplorer(true)}};
+function openPane(tab){
+  if(!document.getElementById(tab))return;
+  $('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));
+  $('.mobile-nav-item').forEach(x=>x.classList.toggle('active',x.dataset.go===tab));
+  $('.pane').forEach(p=>p.classList.toggle('active',p.id===tab));
+  if(tab==='saved')renderSaved();
+  if(tab==='allmap'){initExplorer();setTimeout(()=>explorerMap?.invalidateSize(),160);}
+  if(tab==='routes'){initMap();showRoute();}
+  window.scrollTo({top:0,behavior:'instant'});
+  try{history.replaceState(null,'','#'+tab)}catch(e){}
+}
+$('.mobile-nav-item').forEach(b=>b.onclick=()=>openPane(b.dataset.go));
+window.addEventListener('hashchange',()=>{const tab=location.hash.slice(1);if(['catalog','saved','allmap','routes'].includes(tab))openPane(tab)});
+
 function persist() {
   try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch (e) {}
   updateStats();
+  renderSaved();
 }
 
 function updateStats() {
@@ -586,12 +720,7 @@ async function importState(event) {
     renderCards();
   });
 });
-$$('[data-tab]').forEach(btn => btn.addEventListener('click', () => {
-  $$('[data-tab]').forEach(x => x.classList.toggle('active', x === btn));
-  $$('.pane').forEach(p => p.classList.toggle('active', p.id === btn.dataset.tab));
-  if (btn.dataset.tab === 'routes') { initMap(); showRoute(); }
-  if (btn.dataset.tab === 'allmap') { initExplorer(); setTimeout(()=>explorerMap?.invalidateSize(),100); }
-}));
+$('[data-tab]').forEach(btn => btn.addEventListener('click', () => openPane(btn.dataset.tab)));
 $('#focusRoute').onclick = showRoute;
 $('#exportState').onclick = exportState;
 $('#importState').onchange = importState;
@@ -601,6 +730,8 @@ renderChips();
 updateStats();
 renderCards();
 renderDays();
+renderSaved();
+if(['catalog','saved','allmap','routes'].includes(location.hash.slice(1)))openPane(location.hash.slice(1));
 </script>
 </body>
 </html>
