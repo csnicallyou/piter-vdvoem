@@ -229,6 +229,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
  .discovery-number span{font-size:10px}
 }
 
+
+.saved-day-label{display:grid;gap:6px;font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.saved-day-select{border:1px solid var(--line);border-radius:12px;padding:10px;width:100%;color:var(--ink);background:#fff;text-transform:none;letter-spacing:0;font-size:12px;min-width:0}
+.day-budget{padding:14px 17px;border:1.5px solid var(--ink);background:var(--paper);border-radius:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.day-budget strong{font-size:13px}.day-budget span{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -403,7 +408,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
             <button id="focusRoute" class="btn">Показать весь маршрут</button>
           </div>
         </section>
-        <div id="stops" class="stop-grid"></div>
+        <div id="dayBudget" class="day-budget"></div><div id="stops" class="stop-grid"></div>
       </div>
     </div>
   </section>
@@ -522,6 +527,24 @@ document.addEventListener('click',e=>{
 
 /* Saved places + accessible navigation */
 let savedFilter='all';
+const planKey='spb-liza-anton-dayplans-v1';
+let assignedDays={};
+try{assignedDays=JSON.parse(localStorage.getItem(planKey)||'{}')}catch(e){assignedDays={}}
+function planOptions(id){
+ const current=assignedDays[id]||'';
+ return '<option value="">День не назначен</option>'+routes.map(r=>'<option value="'+safe(r.day)+'" '+(current===r.day?'selected':'')+'>'+new Date(r.day+'T12:00:00').toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' · '+safe(r.title)+'</option>').join('');
+}
+function routeStopsFor(r){
+ const originalIds=new Set(r.stops.map(s=>s.id));
+ return r.stops.concat(places.filter(p=>assignedDays[p.id]===r.day&&!originalIds.has(p.id)).map(p=>({id:p.id,name:p.name,time:'+',note:'Добавлено из вашего избранного · время не назначено',added:true})));
+}
+function assignToDay(id,day){
+ if(day)assignedDays[id]=day;else delete assignedDays[id];
+ try{localStorage.setItem(planKey,JSON.stringify(assignedDays))}catch(e){}
+ renderSaved();renderDays();
+ if($('#routes').classList.contains('active'))showRoute();
+}
+
 function renderSaved(){
   const filtered=places.filter(p=>['wish','must','done'].includes(state[p.id]));
   const counts={wish:0,must:0,done:0};filtered.forEach(p=>counts[state[p.id]]++);
@@ -536,9 +559,10 @@ function renderSaved(){
   $('#savedCards').innerHTML=list.length?list.map(p=>{
     const st=state[p.id];
     const label={wish:'♡ Хочу',must:'★ Обязательно',done:'✓ Посетили'}[st];
-    return '<article class="saved-place"><div class="saved-cat">'+safe(iconFor(p.category)+' '+p.category)+'</div><h3>'+safe(p.name)+'</h3><div class="area">'+safe(p.verified_address||p.area||'Адрес уточняется')+'</div><div class="saved-price">'+(p.price_two===null||p.price_two===undefined?'Стоимость не уточнена':money(p.price_two)+' за двоих')+'</div><div><span class="saved-badge '+safe(st)+'">'+label+'</span></div><div class="saved-actions"><button class="action" data-saved-id="'+p.id+'" data-saved-state="'+(st==='done'?'wish':'done')+'">'+(st==='done'?'↶ Вернуть':'✓ Посетили')+'</button><button class="action" data-saved-id="'+p.id+'" data-saved-state="other">Убрать</button><a class="action link" href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">↗ Карта</a></div></article>';
+    return '<article class="saved-place"><div class="saved-cat">'+safe(iconFor(p.category)+' '+p.category)+'</div><h3>'+safe(p.name)+'</h3><div class="area">'+safe(p.verified_address||p.area||'Адрес уточняется')+'</div><div class="saved-price">'+(p.price_two===null||p.price_two===undefined?'Стоимость не уточнена':money(p.price_two)+' за двоих')+'</div><div><span class="saved-badge '+safe(st)+'">'+label+'</span></div><label class="saved-day-label">Добавить в маршрут<select class="saved-day-select" data-plan-id="'+p.id+'">'+planOptions(p.id)+'</select></label><div class="saved-actions"><button class="action" data-saved-id="'+p.id+'" data-saved-state="'+(st==='done'?'wish':'done')+'">'+(st==='done'?'↶ Вернуть':'✓ Посетили')+'</button><button class="action" data-saved-id="'+p.id+'" data-saved-state="other">Убрать</button><a class="action link" href="'+safe(queryMap(p))+'" target="_blank" rel="noopener">↗ Карта</a></div></article>';
   }).join(''):'<div class="empty">Здесь пока пусто. Отметь интересные места в каталоге кнопкой ♡ «Хочу» или ★ «Точно».</div>';
-  $$('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
+  $('[data-saved-id]').forEach(b=>b.onclick=()=>{state[b.dataset.savedId]=b.dataset.savedState;persist();renderCards();if(explorerMap)renderExplorer()});
+  $('[data-plan-id]').forEach(el=>el.onchange=()=>assignToDay(el.dataset.planId,el.value));
   $$('[data-saved-filter]').forEach(b=>b.classList.toggle('active',b.dataset.savedFilter===savedFilter));
 }
 $$('[data-saved-filter]').forEach(b=>b.onclick=()=>{savedFilter=b.dataset.savedFilter;renderSaved()});
@@ -653,13 +677,16 @@ function initMap() {
 }
 
 function renderDays() {
-  $('#days').innerHTML = routes.map((r, i) => `<button class="daycard ${i===activeDay?'active':''}" data-day="${i}"><strong>${new Date(r.day + 'T12:00:00').toLocaleDateString('ru-RU', { day:'numeric', month:'long', weekday:'short' })} · ${safe(r.title)}</strong><small>${r.stops.length} точки / остановки</small></button>`).join('');
+  $('#days').innerHTML = routes.map((r, i) => `<button class="daycard ${i===activeDay?'active':''}" data-day="${i}"><strong>${new Date(r.day + 'T12:00:00').toLocaleDateString('ru-RU', { day:'numeric', month:'long', weekday:'short' })} · ${safe(r.title)}</strong><small>${routeStopsFor(r).length} остановок</small></button>`).join('');
   $$('#days .daycard').forEach(btn => btn.onclick = () => { activeDay = Number(btn.dataset.day); showRoute(); });
 }
 
 function showRoute() {
-  const route = routes[activeDay];
-  if (!route) return;
+  const base=routes[activeDay];
+  if (!base) return;
+  const route={...base,stops:routeStopsFor(base)};
+  const knownDaily=route.stops.map(s=>byId.get(s.id)).filter(p=>p&&p.price_two!==null&&p.price_two!==undefined);
+  $('#dayBudget').innerHTML='<strong>Остановок: '+route.stops.length+'</strong><span>Известные расходы на двоих: '+(knownDaily.length?money(knownDaily.reduce((t,p)=>t+Number(p.price_two||0),0)):'не указаны')+' · без транспорта и неизвестных цен</span>';
   renderDays();
   $('#routeTitle').innerHTML = `<h2>${safe(route.title)}</h2><p>${safe(route.subtitle)} · ${new Date(route.day + 'T12:00:00').toLocaleDateString('ru-RU', { day:'numeric', month:'long', weekday:'long' })}</p>`;
   const targets = route.stops.map(s => byId.get(s.id)).filter(Boolean);
