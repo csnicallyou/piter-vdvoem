@@ -715,7 +715,7 @@ function showRoute() {
 }
 
 function exportState() {
-  const blob = new Blob([JSON.stringify({version:2, exported:new Date().toISOString(), choices:state}, null, 2)], {type:'application/json'});
+  const blob = new Blob([JSON.stringify({version:3, exported:new Date().toISOString(), choices:state, dayPlans:assignedDays}, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'piter-vdvoem-checklist-avant.json';
@@ -730,9 +730,15 @@ async function importState(event) {
     const obj = JSON.parse(await file.text());
     if (!obj.choices || typeof obj.choices !== 'object') throw new Error('Нераспознанный формат');
     state = obj.choices;
+    if(obj.dayPlans && typeof obj.dayPlans==='object' && !Array.isArray(obj.dayPlans)){
+      assignedDays = obj.dayPlans;
+      try{localStorage.setItem(planKey,JSON.stringify(assignedDays))}catch(e){}
+    }
     persist();
     renderCards();
-    alert('Отметки загружены');
+    renderDays();
+    if($('#routes').classList.contains('active'))showRoute();
+    alert('Отметки и планы загружены');
   } catch (err) {
     alert('Не удалось импортировать файл: ' + err.message);
   }
