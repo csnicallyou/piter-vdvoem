@@ -1,0 +1,33 @@
+name: Geocode researched street addresses
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/geocode_verified_addresses.py'
+      - '.github/workflows/verified-addresses.yml'
+permissions:
+  contents: write
+concurrency:
+  group: verified-addresses
+  cancel-in-progress: false
+jobs:
+  geocode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Geocode researched address list
+        run: python3 scripts/geocode_verified_addresses.py
+      - name: Commit map pins and review report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html verified-addresses-report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Add researched address map pins with source metadata"
+            git pull --rebase origin main
+            git push
+          fi
