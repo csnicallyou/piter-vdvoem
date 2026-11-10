@@ -75,6 +75,7 @@ function click(dataset){
 }
 click({nav:'catalog'});
 assert.match(node('#catalogGrid').innerHTML,/place-card/,'Catalog cards render');
+assert.match(node('#catalogGrid').innerHTML,/category-art/,'Catalog renders artwork');
 click({fav:'1'});
 assert.equal(JSON.parse(store.get('spb-liza-anton-v2-avant'))['1'],'wish','Favorites persist');
 click({nav:'favorites'});
@@ -82,7 +83,9 @@ assert.match(node('#favList').innerHTML,/Monterey/,'Saved list renders selected 
 click({nav:'routes'});
 assert.match(node('#dayTabs').innerHTML,/day-tab/,'Route day tabs render');
 assert.match(node('#stops').innerHTML,/stop/,'Route stops render');
+assert.match(node('#stops').innerHTML,/stop-image/,'Route stops have visual previews');
 click({nav:'map'});
 assert.match(node('#mapCount').textContent,/123/,'Map filter count shown');
+assert.match(node('#mapList').innerHTML,/map-item-image/,'Map results render thumbnails');
 assert.match(node('#homeMapCount').textContent,/123/,'Home map count shown');
 console.log('PASS: '+db.places.length+' places, '+db.routes.length+' itineraries, 123 map pins; home/catalog/saved/routes/map initialize.');
